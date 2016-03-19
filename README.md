@@ -1,4 +1,4 @@
-# All I Want For
+# GiftSift
 
 
-[![Build Status](https://travis-ci.org/digbyk/digby.net.svg?branch=master)](https://travis-ci.org/waymead/aiwf)
+[![Build Status](https://travis-ci.org/waymead/giftsift.svg?branch=master)](https://travis-ci.org/waymead/GiftSift)
