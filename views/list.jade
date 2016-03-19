@@ -25,8 +25,7 @@ block main
 										else
 											span.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
 										if gift.notes
-											br
-											span= gift.notes
+											span.mdl-layout--large-screen-only &nbsp;(#{gift.notes})
 											
 									td
 										if gift.boughtBy === user.email
