@@ -10,28 +10,32 @@ block main
 				if numGifts === 0
 					h6 There are no gifts in this list
 				else
-					table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
-						each person, name in gifts
-							tbody
+					each person, name in gifts
+						h6= name
+						table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
+							each gift in person
 								tr
-									td(colspan="2").mdl-data-table__cell--non-numeric.mdl-color--primary.mdl-color-text--white
-										span= name
-								each gift in person
-									tr
-										td.mdl-data-table__cell--non-numeric
-											if gift.url
-												a.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
-											else
-												span.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
-												
-										td
-											if gift.boughtBy === user.email
-												a.mdl-button.mdl-js-button.mdl-button--accent Bought
-												a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(href="/gifts/replace/#{gift.id}")
-													i.material-icons.md-light remove
-											else if typeof(gift.boughtBy) == 'undefined'
-												a.mdl-button.mdl-js-button.mdl-button--primary Available
-												a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-color-text--white(href="/gifts/buy/#{gift.id}")
-													i.material-icons.md-light add
-											else 
-												span.mdl-button.mdl-js-button.mdl-button--gray Unavailable
+									td.mdl-data-table__cell--non-numeric
+										//if gift.image
+											img.list-image(src="#{gift.image}")
+										//else 
+											img.list-image(src="")
+										if gift.url
+											a.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
+										else
+											span.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
+										if gift.notes
+											br
+											span= gift.notes
+											
+									td
+										if gift.boughtBy === user.email
+											a.mdl-button.mdl-js-button.mdl-button--accent Bought
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(href="/gifts/replace/#{gift.id}")
+												i.material-icons.md-light remove
+										else if typeof(gift.boughtBy) == 'undefined'
+											a.mdl-button.mdl-js-button.mdl-button--primary Available
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-color-text--white(href="/gifts/buy/#{gift.id}")
+												i.material-icons.md-light add
+										else 
+											span.mdl-button.mdl-js-button.mdl-button--gray Unavailable									
