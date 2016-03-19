@@ -39,7 +39,7 @@ router.get('/lists/manage', ensureLoggedIn, function(req, res) {
 	List.find({ owner: req.user.email }, {}, { sort: 'name' })
 		.then(function(lists) {
 			ownedLists = lists;
-			return List.find({ members: req.user.email }, {}, { sort: 'name' })
+			return List.find({ members: req.user.email }, {}, { sort: 'name' });
 		})
 		.then(function(lists) {
 			res.render('manage-lists', { ownedLists: ownedLists, memberOfLists: lists, owner: req.user.email });
