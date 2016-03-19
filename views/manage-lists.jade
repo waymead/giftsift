@@ -29,10 +29,11 @@ block main
 							tr(data-mdl-data-table-selectable-value="list-#{list.id}")
 								td.mdl-data-table__cell--non-numeric
 									a.mdl-color-text--primary(href="edit/#{list.id}")= list.name
+									p.list-share(id="list-share-#{list.id}") Sharey
 								td
 									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/#{list.id}")
 										i.material-icons.md-light edit									
-									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(data-id="#{list.id}", data-name="#{list.name}")
+									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="share/#{list.id}")
 										i.material-icons.md-light share
 									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(data-id="#{list.id}", data-name="#{list.name}")
 										i.material-icons.md-light delete
@@ -56,19 +57,13 @@ block main
   
 block append script
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js")
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js")
 	script.
-		$("#members").select2({
-			tags: true,
-			tokenSeparators: [',', ' '],
-			placeholder: 'Add members (emails)'
-		});
+		var dialog = document.querySelector('#delete-dialog');
 		$('.delete-button').each(function() {
 			$(this).on('click', function() {
 				deleteList($(this).attr('data-id'), $(this).attr('data-name'));
 			});
 		});
-		var dialog = document.querySelector('#delete-dialog');
 		function deleteList(id, name) {
 			var dialog = document.querySelector('#delete-dialog');
 			if (! dialog.showModal) {

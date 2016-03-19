@@ -24,8 +24,8 @@ router.get('/lists', ensureLoggedIn, function(req, res) {
 		});
 });
 
-router.get('/:listId/edit', ensureLoggedIn, function(req, res) {
-	Gift.find({ list: req.params.listId })
+router.get('/:id/edit', ensureLoggedIn, function(req, res) {
+	Gift.find({ list: req.params.id })
 		.then(function(gifts) {
 			res.render('list-edit', { gifts: gifts });
 		})
@@ -65,7 +65,7 @@ router.get('/lists/edit/:id', ensureLoggedIn, function(req, res) {
 });
 
 router.post('/lists/save', ensureLoggedIn, function(req, res) {
-	var list = new List({ name: req.body.name, notes: req.body.notes, members: req.user.email, owner: req.user.email });
+	var list = new List({ name: req.body.name, notes: req.body.notes, members: [req.user.email], owner: req.user.email });
 	if (!req.body.id) {
 		list.save()
 			.then(function() {
@@ -100,8 +100,19 @@ router.get('/lists/delete/:id', ensureLoggedIn, function(req, res) {
 		});
 });
 
-router.get('/lists/join/:listId', ensureLoggedIn, function(req, res) {
-	List.findOneAndUpdate({ _id: req.params.listId }, {$addToSet: {members: req.user.email}}, { new: false })
+router.get('/lists/share/:id', ensureLoggedIn, function(req, res) {
+	List.findOne({ _id: req.params.id, owner: req.user.email })
+		.exec()
+		.then(function(list) {
+			res.render('share-list', { list: list, owner: req.user.email, listLink: process.env.LISTLINK_DOMAIN });
+		})
+		.catch(function(err) {
+			logger.error(err);
+		});
+});
+
+router.get('/lists/join/:id', ensureLoggedIn, function(req, res) {
+	List.findOneAndUpdate({ _id: req.params.id }, {$addToSet: {members: req.user.email}}, { new: false })
 		.then(function() {
 			res.redirect('/lists');
 		})
@@ -110,8 +121,8 @@ router.get('/lists/join/:listId', ensureLoggedIn, function(req, res) {
 		});
 });
 
-router.get('/lists/leave/:listId', ensureLoggedIn, function(req, res) {
-	List.findOneAndUpdate({ _id: req.params.listId }, {$pull: {members: req.user.email}}, { new: false })
+router.get('/lists/leave/:id', ensureLoggedIn, function(req, res) {
+	List.findOneAndUpdate({ _id: req.params.id }, {$pull: {members: req.user.email}}, { new: false })
 		.then(function() {
 			res.redirect('/lists');
 		})
@@ -120,16 +131,16 @@ router.get('/lists/leave/:listId', ensureLoggedIn, function(req, res) {
 		});
 });
 
-router.get('/lists/:listId', ensureLoggedIn, function(req, res) {
+router.get('/lists/:id', ensureLoggedIn, function(req, res) {
 	var groupedGifts;
 	var numGifts;
-	Gift.find({ list: req.params.listId, owner: { '$ne': req.user.email } })
+	Gift.find({ list: req.params.id, owner: { '$ne': req.user.email } })
 		.sort('owner')
 		.exec()
 		.then(function(gifts) {
 			groupedGifts = _.groupBy(gifts, 'owner');
 			numGifts = gifts.length;
-			return List.findOne({ _id: req.params.listId });
+			return List.findOne({ _id: req.params.id });
 		})
 		.then(function(list) {
 			res.render('list', { list: list, gifts: groupedGifts, user: req.user, numGifts: numGifts });
