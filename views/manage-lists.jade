@@ -6,11 +6,8 @@ block append head
 block main
 	#content
 		.mdl-grid
-			.mdl-cell.mdl-cell--6-col
+			.mdl-cell.mdl-cell--12-col
 				h2.mdl-color-text--primary Manage lists
-			.mdl-cell.mdl-cell--6-col
-				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/lists/add")
-					i.material-icons.md-light add
 				
 			if ownedLists.length == 0
 				.mdl-cell.mdl-cell--12-col
@@ -34,16 +31,20 @@ block main
 										i.material-icons.md-light edit									
 									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="share/#{list.id}")
 										i.material-icons.md-light share
-									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(data-id="#{list.id}", data-name="#{list.name}")
+									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id="#{list.id}", data-name="#{list.name}")
 										i.material-icons.md-light delete
-									button.mdl-button.mdl-js-button.mdl-button--icon(id="list#{list.id}")
+									//button.mdl-button.mdl-js-button.mdl-button--icon(id="list#{list.id}")
 										i.material-icons more_vert
-									ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list#{list.id}")
+									//ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list#{list.id}")
 										li.mdl-menu__item
 											a.mdl-color-text--primary(href="edit/#{list.id}") Edit list								
 										li.mdl-menu__item
 											a.mdl-color-text--primary(href="delete/#{list.id}") Delete								
 				
+			.mdl-cell.mdl-cell--12-col
+				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/lists/add")
+					i.material-icons.md-light add
+
 				dialog#delete-dialog.mdl-dialog
 					h4.mdl-dialog__title#list-name
 					.mdl-dialog__content
