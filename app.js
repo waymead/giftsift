@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-//app.use(favicon(__dirname + '/public/images/waymead.png'));
+app.use(favicon(__dirname + '/public/images/logo.png'));
 app.use(helmet());
 
 app.use(session({
