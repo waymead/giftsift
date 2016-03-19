@@ -1,7 +1,6 @@
 extends ./layout
 
 block append head
-	link(rel="stylesheet", href="/css/aiwf.css")
 	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css")
 
 block main
@@ -20,11 +19,15 @@ block main
 							.mdl-textfield.mdl-js-textfield
 								input.mdl-textfield__input(type="text", id="name", name="name", required, value="#{list? list.name: ''}")
 								label.mdl-textfield__label(for="name") Name
+							each listType in ['christmas', 'easter', 'wedding', 'birthday']
+								label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for="#{listType}")
+									input.mdl-radio__button(type="radio", id="#{listType}", name="type", required, value="#{listType}" checked=(list && list.type===listType ? "checked" : undefined))
+									span.mdl-radio__label= listType
 							.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 								textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5").
 									#{list? list.notes: ''}
 								label.mdl-textfield__label(for="notes") Notes
-							.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+							//.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 								label.mdl-textfield__label(for="members") Members
 								select.mdl-textfield__input(type="text", id="members", name="members", multiple, required)
 									if list && list.members

@@ -65,7 +65,7 @@ router.get('/lists/edit/:id', ensureLoggedIn, function(req, res) {
 });
 
 router.post('/lists/save', ensureLoggedIn, function(req, res) {
-	var list = new List({ name: req.body.name, notes: req.body.notes, members: req.body.members, owner: req.user.email });
+	var list = new List({ name: req.body.name, notes: req.body.notes, members: req.user.email, owner: req.user.email });
 	if (!req.body.id) {
 		list.save()
 			.then(function() {
@@ -75,7 +75,7 @@ router.post('/lists/save', ensureLoggedIn, function(req, res) {
 				logger.error(err);
 			});
 	} else {
-		List.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true })
+		List.findOneAndUpdate({ _id: req.body.id }, req.body, { new: false })
 			.then(function() {
 				res.redirect('/lists/manage');
 			})
@@ -101,7 +101,7 @@ router.get('/lists/delete/:id', ensureLoggedIn, function(req, res) {
 });
 
 router.get('/lists/join/:listId', ensureLoggedIn, function(req, res) {
-	List.findOneAndUpdate({ _id: req.params.listId }, {$push: {members: req.user.email}}, { new: true })
+	List.findOneAndUpdate({ _id: req.params.listId }, {$addToSet: {members: req.user.email}}, { new: false })
 		.then(function() {
 			res.redirect('/lists');
 		})
@@ -111,7 +111,7 @@ router.get('/lists/join/:listId', ensureLoggedIn, function(req, res) {
 });
 
 router.get('/lists/leave/:listId', ensureLoggedIn, function(req, res) {
-	List.findOneAndUpdate({ _id: req.params.listId }, {$pull: {members: req.user.email}}, { new: true })
+	List.findOneAndUpdate({ _id: req.params.listId }, {$pull: {members: req.user.email}}, { new: false })
 		.then(function() {
 			res.redirect('/lists');
 		})

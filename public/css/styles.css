@@ -1,250 +1,96 @@
-*, *:before, *:after {
-	box-sizing: border-box;
+html, body {
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	background-color: #e8e8e8;
 }
-html {
-	height: 100vh;
-}
-body {
-	font-family: Arial, Helvetica, sans-serif;
-  	font-size: 1rem;
-	font-weight: 100;
-	line-height: 1.5rem;
-	background-color: #eee;
-	color: #333;
-	padding: 0;
-	margin: 0;
-	height: 100vh;
-	box-sizing: 0;
-}
-a {
-	color: #333;
-	text-decoration: none;
-}
-p {
-	margin: 1.5rem 0;
-}
-a:hover {
-	color: #666;
-	text-decoration: underline;
-}
-pre {
-	font-family: monospace;
-	margin: 1rem;
-	padding: 0.25rem;
-	background-color: rgba(255,255,255,1);
-}
-h1, h2, h3, h4 {
-	font-weight: normal;
-}
-h1 {
-	font-size: 2rem;
-}
-h2 {
-	font-size: 1.8rem;
-}
-h3 {
-	font-size: 1.6rem;
-}
-table {
-	width: 100%;
-}
-table thead tr {
-	background-color: rgba(0, 0, 0, 0.2);
-}
-table thead tr th {
-	font-weight: normal;
-}
-#outer {
-	height: 100vh;
-}
-#inner {
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-}
-#header {
-	width: 100%;
-	order: -2;
-	padding: 0rem;
-	background-color: #48f;
-	color: white;
-	box-shadow: 0px 2px 8px rgba(0,0,0,0.5);
-}
-#main {
-	flex: 1;
-	width: 100%;
-	padding: 2rem;
-	order: 0;
-}
-@media (max-width: 600px) {
-	#main {
-		min-width: 100%;
-	}
-}
-#main>ul {
-	list-style-type: none;
-	margin: 0;
-	padding-left: 0;
-	line-height: 2rem;
-}
-#footer {
-	max-width: 1200px;
-	padding: 2rem 4rem 0;
-	order: 2;
-	font-size: smaller;
-}
-#nav {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 0 1rem;
-}
-#nav a {
-	color: white;
-	display: flex;
-	align-items: center;
-}
-#nav label {
-	cursor: pointer;
-}
-#nav img.logo {
-	padding: 0;
-	margin: 0rem;
-	height: 4rem;
-}
-#nav span {
-	padding: 0;
-	margin: 0.5rem;
-}
-#nav ul {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding: 0.25rem;
-	min-height: 2rem;
-	margin: 0;
-	list-style-type: none;
-}
-#nav ul:first-child {
-	justify-content: flex-start;
-}
-#nav ul li {
-	line-height: 1em;
-	list-style-type: none;
-	padding: 0.5rem 1rem;
-	border: 2px solid transparent;
-	border-radius: 4px;
-}
-#nav ul li.toggle {
-	display: none;
-}
-#nav ul li.button {
-	line-height: 0.5em;
-	border: 1px solid white;
-	list-style-type: none;
-}
-#nav ul li a:hover {
-	text-decoration: none;
-}
-#nav ul li img {
-	height: 2rem;
-	border-radius: 50%;
-}
-#nav input[type=checkbox] {
-	display: none;
-}
-#nav input:checked ~ ul li:not([class~=toggle]) {
-	display: none;
-	transition: max-height 0.8s;
-}
-@media (max-width: 600px) {
-	#nav {
-		flex-direction: column;
-	}
-	#nav ul, #nav a {
-		flex-direction: column;
-		text-align: center;
-	}
-	#nav ul li {
-		padding: 0.5rem;
-	}
-	#nav ul li.toggle {
-		display: block;
-	}
-	#nav ul li:not([class~=toggle]) {
-		display: none;
-	}
-	#nav input:checked ~ ul li:not([class~=toggle]) {
-		display: block;
-	}
-}
-.round {
-	border-radius: 50%;
-}
-.centred {
-	text-align: center;
-}
-.raised {
-	box-shadow: 1px 1px 8px rgba(0,0,0,0.25);
-	background-color: white;
-}
-ul.raised li {
-	padding: 0.25rem 1rem;	
-}
-section.raised {
+form {
+	max-width: 400px;
 	padding: 1rem;
 }
-/* Let's get this party started */
-::-webkit-scrollbar {
-    width: 12px;
+section {
+	min-width: 480px;
+	margin: 1rem;
+	flex: 1;
 }
- 
-/* Track */
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-    border-radius: 10px;
+h1, h2 {
+	font-weight: 700;
+	text-transform: uppercase;
 }
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    border-radius: 10px;
-    background: rgba(128,128,128,0.5); 
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+h1, h2, h3, h4, h5, h6 {
+	width: 100%;
 }
-::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(128,128,128,0.4); 
+.new {
+	float: right;
 }
-
-/* Google material icons */
-.material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 1rem;  /* Preferred icon size */
+.mdl-layout__header {
+	background: url('/images/small-bg.jpg') center / cover;
+}
+.mdl-grid {
+	justify-content: center;
+	max-width: 1200px;
+}
+.mdl-card {
+	min-height: auto;
+}
+.card-wide {
+	width: 100%;	
+}
+.mdl-textfield {
+	width: 100%;
+}
+.mdl-data-table {
+	min-width: 100%;
+}
+.mdl-data-table tbody td:nth-child(3) {
+	width: 4rem;
+}
+.mdl-button {
+	margin-left: 10px;
+}
+.mdl-radio {
+	display: block;
+}
+#buyreplace *:first-child {
 	display: inline-block;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-
-	/* Support for IE. */
-	font-feature-settings: 'liga';
 }
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
-
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
+#buyreplace *:last-child {
+	display: none;
+}
+#buyreplace:hover *:first-child {
+	display: none;
+}
+#buyreplace:hover *:last-child {
+	display: inline-block;
+}
+.home-card {
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+#home-card-1 {
+	color: #fff;
+	height: 176px;
+	background: url('../images/christmas-xmas-christmas-tree-decoration-large.jpg') center / cover;
+}
+#home-card-2 {
+	color: #fff;
+	height: 176px;
+	background: url('../images/christmas-xmas-gifts-presents-large.jpg') center / cover;
+}
+#home-card-3 {
+	color: #fff;
+	height: 176px;
+	background: url('../images/theme-christmas-large.jpg') center / cover;
+}
+.background-1 {
+	background: url('../images/christmas-xmas-gifts-presents-large.jpg') center / cover;
+}
+.background-2 {
+	background: url('../images/christmas-xmas-christmas-tree-decoration-large.jpg') center / cover;
+}
+.background-3 {
+	background: url('../images/theme-christmas-large.jpg') center / cover;
+}
+.list-image {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	margin-right: 8px;
+}

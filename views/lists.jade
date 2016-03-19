@@ -1,8 +1,5 @@
 extends ./layout
 
-block append head
-	link(rel="stylesheet", href="/css/aiwf.css")
-
 block main
 	#content
 		.mdl-grid
@@ -19,7 +16,7 @@ block main
 						each list in lists
 							tr
 								td.mdl-data-table__cell--non-numeric
-									img.list-image(src="")
+									img.list-image(src="/images/#{list.type}.jpg")
 									a.mdl-color-text--primary(href="/lists/#{list.id}") #{list.name}
 									br
 									span= list.notes

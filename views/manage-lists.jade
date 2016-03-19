@@ -1,7 +1,6 @@
 extends ./layout
 
 block append head
-	link(rel="stylesheet", href="/css/aiwf.css")
 	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css")
 
 block main
@@ -33,6 +32,8 @@ block main
 								td
 									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/#{list.id}")
 										i.material-icons.md-light edit									
+									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(data-id="#{list.id}", data-name="#{list.name}")
+										i.material-icons.md-light share
 									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(data-id="#{list.id}", data-name="#{list.name}")
 										i.material-icons.md-light delete
 									button.mdl-button.mdl-js-button.mdl-button--icon(id="list#{list.id}")
