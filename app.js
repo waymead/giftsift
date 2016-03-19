@@ -17,12 +17,6 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
-var i18n = require('i18next');
-var i18nextMiddleware = require('i18next-express-middleware');
-i18n
-	.use(i18nextMiddleware.LanguageDetector)
-	.init({});
-
 var passport = require('passport');
 var strategy = require('./lib/auth0');
 
