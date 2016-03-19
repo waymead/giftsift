@@ -11,7 +11,7 @@ var listSchema = new Schema({
 	},
 	members: [String],
 	owner: String
-}, { collection: 'aiwf_lists' });
+}, { collection: 'lists' });
 
 var List = mongoose.model('List', listSchema);
 
@@ -29,7 +29,7 @@ var giftSchema = new Schema({
 	},
 	owner: String,
 	boughtBy: String
-}, { collection: 'aiwf_gifts' });
+}, { collection: 'gifts' });
 
 var Gift = mongoose.model('Gift', giftSchema);
 
