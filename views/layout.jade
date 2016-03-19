@@ -1,0 +1,33 @@
+doctype html
+html(lang="en")
+	block vars
+	head
+		block head
+			title!= "www.digby.net" + (title ? " – " + title : "")
+	
+			meta(name="Content-Type", content="text/html; charset=UTF-8")
+			meta(name="X-UA-Compatible", content="IE=edge,chrome=1")
+			meta(name="viewport", content="width=device-width, initial-scale=1.0")
+	
+			link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+			link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700")
+			link(rel="stylesheet", href="https://code.getmdl.io/1.1.3/material.deep_orange-orange.min.css")
+			link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css")
+			//link(rel="stylesheet", href="/css/styles.css")
+					
+			link(rel="shortcut icon", href="/images/waymead.png", sizes="196x196", type="image/x-icon")
+			link(rel="shortcut icon", href="/images/waymead.png", sizes="128x128", type="image/x-icon")
+			link(rel="apple-touch-icon", href="/images/waymead.png", sizes="128x128", type="image/x-icon")
+			link(rel="apple-touch-icon-precomposed", href="/images/waymead.png", sizes="128x128", type="image/x-icon")
+			
+	body
+		.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+			block header
+				include header
+			main.mdl-layout__content
+				block main
+			block footer
+			
+		block script
+			script(src="https://code.getmdl.io/1.1.2/material.min.js")
+			script(src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js")

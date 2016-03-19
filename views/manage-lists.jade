@@ -1,0 +1,82 @@
+extends ./layout
+
+block append head
+	link(rel="stylesheet", href="/css/aiwf.css")
+	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css")
+
+block main
+	#content
+		.mdl-grid
+			.mdl-cell.mdl-cell--6-col
+				h2.mdl-color-text--primary Manage lists
+			.mdl-cell.mdl-cell--6-col
+				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/lists/add")
+					i.material-icons.md-light add
+				
+			if ownedLists.length == 0
+				.mdl-cell.mdl-cell--12-col
+					p You don't own any lists. Create one 
+						a(href="/lists/add") here
+						span .
+					
+			else
+				.mdl-cell.mdl-cell--12-col
+					table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
+						//thead.background-2
+							tr
+								th.mdl-data-table__cell--non-numeric 
+								th 
+						each list in ownedLists
+							tr(data-mdl-data-table-selectable-value="list-#{list.id}")
+								td.mdl-data-table__cell--non-numeric
+									a.mdl-color-text--primary(href="edit/#{list.id}")= list.name
+								td
+									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/#{list.id}")
+										i.material-icons.md-light edit									
+									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(data-id="#{list.id}", data-name="#{list.name}")
+										i.material-icons.md-light delete
+									button.mdl-button.mdl-js-button.mdl-button--icon(id="list#{list.id}")
+										i.material-icons more_vert
+									ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list#{list.id}")
+										li.mdl-menu__item
+											a.mdl-color-text--primary(href="edit/#{list.id}") Edit list								
+										li.mdl-menu__item
+											a.mdl-color-text--primary(href="delete/#{list.id}") Delete								
+				
+				dialog#delete-dialog.mdl-dialog
+					h4.mdl-dialog__title#list-name
+					.mdl-dialog__content
+						p Are you sure you want to delete the list?
+						p This will delete all gifts in the list, even if other people have bought them.
+						p#list-name
+					.mdl-dialog__actions
+						a.mdl-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent.ok-button(href="delete/") Delete
+						button.mdl-button.close-button.close(type="button") Cancel
+  
+block append script
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js")
+	script.
+		$("#members").select2({
+			tags: true,
+			tokenSeparators: [',', ' '],
+			placeholder: 'Add members (emails)'
+		});
+		$('.delete-button').each(function() {
+			$(this).on('click', function() {
+				deleteList($(this).attr('data-id'), $(this).attr('data-name'));
+			});
+		});
+		var dialog = document.querySelector('#delete-dialog');
+		function deleteList(id, name) {
+			var dialog = document.querySelector('#delete-dialog');
+			if (! dialog.showModal) {
+				dialogPolyfill.registerDialog(dialog);
+			}
+			dialog.showModal();
+			dialog.querySelector('.close-button').addEventListener('click', function() {
+				dialog.close();       
+			});
+			dialog.querySelector('#list-name').innerText = name;
+			dialog.querySelector('.ok-button').href='delete/' + id;
+		}

@@ -1,0 +1,87 @@
+html, body {
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	background-color: #e8e8e8;
+}
+form {
+	max-width: 400px;
+	padding: 1rem;
+}
+section {
+	min-width: 480px;
+	margin: 1rem;
+	flex: 1;
+}
+h1, h2 {
+	font-weight: 700;
+	text-transform: uppercase;
+}
+h1, h2, h3, h4, h5, h6 {
+	width: 100%;
+}
+.new {
+	float: right;
+}
+.mdl-layout__header {
+	background: url('/images/small-bg.jpg') center / cover;
+}
+.mdl-grid {
+	justify-content: center;
+	max-width: 1200px;
+}
+.mdl-card {
+	min-height: auto;
+}
+.card-wide {
+	width: 100%;	
+}
+.mdl-textfield {
+	width: 100%;
+}
+.mdl-data-table {
+	min-width: 100%;
+}
+.mdl-data-table tbody td:nth-child(3) {
+	width: 4rem;
+}
+.mdl-button {
+	margin-left: 10px;
+}
+#buyreplace *:first-child {
+	display: inline-block;
+}
+#buyreplace *:last-child {
+	display: none;
+}
+#buyreplace:hover *:first-child {
+	display: none;
+}
+#buyreplace:hover *:last-child {
+	display: inline-block;
+}
+.home-card {
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+#home-card-1 {
+	color: #fff;
+	height: 176px;
+	background: url('../images/christmas-xmas-christmas-tree-decoration-large.jpg') center / cover;
+}
+#home-card-2 {
+	color: #fff;
+	height: 176px;
+	background: url('../images/christmas-xmas-gifts-presents-large.jpg') center / cover;
+}
+#home-card-3 {
+	color: #fff;
+	height: 176px;
+	background: url('../images/theme-christmas-large.jpg') center / cover;
+}
+.background-1 {
+	background: url('../images/christmas-xmas-gifts-presents-large.jpg') center / cover;
+}
+.background-2 {
+	background: url('../images/christmas-xmas-christmas-tree-decoration-large.jpg') center / cover;
+}
+.background-3 {
+	background: url('../images/theme-christmas-large.jpg') center / cover;
+}
