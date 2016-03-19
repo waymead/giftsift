@@ -16,10 +16,10 @@ block main
 							each gift in person
 								tr
 									td.mdl-data-table__cell--non-numeric
-										//if gift.image
+										if gift.image
 											img.list-image(src="#{gift.image}")
-										//else 
-											img.list-image(src="")
+										else 
+											img.list-image(src="http://lorempixel.com/100/100/abstract/")
 										if gift.url
 											a.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
 										else

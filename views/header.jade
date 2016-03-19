@@ -20,3 +20,7 @@ block header
 			a.mdl-navigation__link.mdl-color-text--white(href="/lists") View lists
 			a.mdl-navigation__link.mdl-color-text--white(href="/lists/manage") Manage my lists
 			a.mdl-navigation__link.mdl-color-text--white(href="/gifts/manage") Manage my gifts
+			if !user
+				a.mdl-navigation__link.mdl-color-text--white(href="/login") Login
+			if user
+				a.mdl-navigation__link.mdl-color-text--white(href="/logout") Logout
