@@ -162,7 +162,7 @@ router.get('/gifts/manage', ensureLoggedIn, function(req, res) {
 });
 
 router.get('/gifts/add', ensureLoggedIn, function(req, res) {
-	List.find({ owner: req.user.email }, {}, { sort: 'name' })
+	List.find({ members: req.user.email }, {}, { sort: 'name' })
 		.then(function(lists) {
 			res.render('edit-gift', { lists: lists, owner: req.user.email });
 		})
