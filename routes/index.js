@@ -189,7 +189,7 @@ router.get('/gifts/edit/:id', ensureLoggedIn, function(req, res) {
 });
 
 router.post('/gifts/save', ensureLoggedIn, function(req, res) {
-	var gift = new Gift({ name: req.body.name, url: req.body.url, list: req.body.list, owner: req.user.email });
+	var gift = new Gift({ name: req.body.name, url: req.body.url, image: req.body.image, list: req.body.list, owner: req.user.email });
 	if (!req.body.id) {
 		gift.save()
 			.then(function() {
