@@ -65,7 +65,9 @@ router.get('/lists/edit/:id', ensureLoggedIn, function(req, res) {
 });
 
 router.post('/lists/save', ensureLoggedIn, function(req, res) {
-	var list = new List({ name: req.body.name, notes: req.body.notes, members: [req.user.email], owner: req.user.email });
+	var list = new List(req.body);
+	list.owner = req.user.email;
+	list.ownerName = req.user.name;
 	if (!req.body.id) {
 		list.save()
 			.then(function() {
@@ -138,7 +140,7 @@ router.get('/lists/:id', ensureLoggedIn, function(req, res) {
 		.sort('owner')
 		.exec()
 		.then(function(gifts) {
-			groupedGifts = _.groupBy(gifts, 'owner');
+			groupedGifts = _.groupBy(gifts, 'ownerName');
 			numGifts = gifts.length;
 			return List.findOne({ _id: req.params.id });
 		})
@@ -189,7 +191,9 @@ router.get('/gifts/edit/:id', ensureLoggedIn, function(req, res) {
 });
 
 router.post('/gifts/save', ensureLoggedIn, function(req, res) {
-	var gift = new Gift({ name: req.body.name, url: req.body.url, image: req.body.image, list: req.body.list, owner: req.user.email });
+	var gift = new Gift(req.body);
+	gift.owner = req.user.email;
+	gift.ownerName = req.user.name;
 	if (!req.body.id) {
 		gift.save()
 			.then(function() {

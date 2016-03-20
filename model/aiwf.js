@@ -10,7 +10,8 @@ var listSchema = new Schema({
 		default: Date.now()
 	},
 	members: [String],
-	owner: String
+	owner: String,
+	ownerName: String
 }, { collection: 'lists' });
 
 var List = mongoose.model('List', listSchema);
@@ -30,6 +31,7 @@ var giftSchema = new Schema({
 		default: Date.now()
 	},
 	owner: String,
+	ownerName: String,
 	boughtBy: String
 }, { collection: 'gifts' });
 
