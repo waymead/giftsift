@@ -115,6 +115,16 @@ router.get('/lists/share/:id', ensureLoggedIn, function(req, res) {
 
 router.get('/lists/join/:id', ensureLoggedIn, function(req, res) {
 	List.findOneAndUpdate({ _id: req.params.id }, {$addToSet: {members: req.user.email}}, { new: false })
+		.then(function(list) {
+			res.render('join-list', {list: list});
+		})
+		.catch(function(err) {
+			logger.error(err);
+		});
+});
+
+router.post('/lists/join', ensureLoggedIn, function(req, res) {
+	List.findOneAndUpdate({ _id: req.body.id }, {$addToSet: {members: req.user.email}}, { new: false })
 		.then(function() {
 			res.redirect('/lists');
 		})
