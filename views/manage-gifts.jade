@@ -8,29 +8,36 @@ block main
 			.mdl-cell.mdl-cell--12-col
 				h2.mdl-color-text--primary Manage gifts
 				
-			.mdl-cell.mdl-cell--12-col
-				table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
-					//thead.background-3
-						tr
-							th.mdl-data-table__cell--non-numeric 
-							th 
-					tbody
-						each gift in gifts
-							tr(data-mdl-data-table-selectable-value="gift-#{gift.id}")
-								td.mdl-data-table__cell--non-numeric
-									a.mdl-color-text--primary(href="edit/#{gift.id}")= gift.name
-									br
-									span= gift.list.name
-								td
-									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/#{gift.id}")
-										i.material-icons.md-light edit									
-									button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id="#{gift.id}", data-name="#{gift.name}")
-										i.material-icons.md-light delete
+			if gifts.length == 0
+				.mdl-cell.mdl-cell--12-col
+					p You haven't created any gifts. Create one 
+						a(href="/gifts/add") here
+						span .
+					
+			else
+				.mdl-cell.mdl-cell--12-col
+					table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
+						//thead.background-3
+							tr
+								th.mdl-data-table__cell--non-numeric 
+								th 
+						tbody
+							each gift in gifts
+								tr(data-mdl-data-table-selectable-value="gift-#{gift.id}")
+									td.mdl-data-table__cell--non-numeric
+										a.mdl-color-text--primary(href="edit/#{gift.id}")= gift.name
+										br
+										span= gift.list.name
+									td
+										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/#{gift.id}")
+											i.material-icons.md-light edit									
+										button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id="#{gift.id}", data-name="#{gift.name}")
+											i.material-icons.md-light delete
 
-			.mdl-cell.mdl-cell--12-col
-				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/gifts/add")
-					i.material-icons.md-light add
-														
+				.mdl-cell.mdl-cell--12-col
+					a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/gifts/add")
+						i.material-icons.md-light add
+															
 				dialog#delete-dialog.mdl-dialog
 					h4.mdl-dialog__title#list-name
 					.mdl-dialog__content

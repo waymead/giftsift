@@ -6,25 +6,34 @@ block main
 			.mdl-cell.mdl-cell--12-col
 				h2.mdl-color-text--primary Gift Lists
 				
-			.mdl-cell.mdl-cell--12-col
-				table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
-					//thead.background-1
-						tr
-							th.mdl-data-table__cell--non-numeric
-							th
-					tbody
-						each list in lists
+			if lists.length == 0
+				.mdl-cell.mdl-cell--12-col
+					p You're not a member of any lists.
+					p You can create your own one 
+						a(href="/lists/add") here
+						span , or join someone else's list by following the link in one of their invitations.
+					
+			else
+				.mdl-cell.mdl-cell--12-col
+					table.mdl-data-table.mdl-js-data-table.mdl-shadow--4dp
+						//thead.background-1
 							tr
-								td.mdl-data-table__cell--non-numeric
-									img.list-image(src="/images/#{list.type}.jpg")
-									a.mdl-color-text--primary(href="/lists/#{list.id}") #{list.name}
-									if list.notes
-										span.mdl-layout--large-screen-only &nbsp;(#{list.notes})
-								td
-									a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button(href="/lists/#{list.id}")
-										i.material-icons.md-light keyboard_arrow_right									
-									button.mdl-button.mdl-js-button.mdl-button--icon(id="list#{list.id}")
-										i.material-icons more_vert
-									ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list#{list.id}")
-										li.mdl-menu__item
-											a.mdl-color-text--primary(href="lists/leave/#{list.id}") Leave list
+								th.mdl-data-table__cell--non-numeric
+								th
+						tbody
+							each list in lists
+								tr
+									td.mdl-data-table__cell--non-numeric
+										img.list-image(src="/images/#{list.type}.jpg")
+										//span.mdl-badge(data-badge="#{list.gifts.length}")
+										a.mdl-color-text--primary(href="/lists/#{list.id}") #{list.name}
+										if list.notes
+											span.mdl-layout--large-screen-only &nbsp;(#{list.notes})
+									td
+										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button(href="/lists/#{list.id}")
+											i.material-icons.md-light keyboard_arrow_right									
+										button.mdl-button.mdl-js-button.mdl-button--icon(id="list#{list.id}")
+											i.material-icons more_vert
+										ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list#{list.id}")
+											li.mdl-menu__item
+												a.mdl-color-text--primary(href="lists/leave/#{list.id}") Leave list
