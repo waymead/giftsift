@@ -9,6 +9,10 @@ var listSchema = new Schema({
 		type: Date,
 		default: Date.now()
 	},
+	gifts: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Gift'
+	}],
 	members: [String],
 	owner: String,
 	ownerName: String
