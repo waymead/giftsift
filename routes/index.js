@@ -24,6 +24,7 @@ router.get('/lists', ensureLoggedIn, function(req, res) {
 		});
 });
 
+// TODO bin
 router.get('/:id/edit', ensureLoggedIn, function(req, res) {
 	Gift.find({ list: req.params.id })
 		.then(function(gifts) {
@@ -68,6 +69,7 @@ router.post('/lists/save', ensureLoggedIn, function(req, res) {
 	var list = new List(req.body);
 	list.owner = req.user.email;
 	list.ownerName = req.user.name;
+	list.members = [req.user.email];
 	if (!req.body.id) {
 		list.save()
 			.then(function() {
@@ -202,10 +204,13 @@ router.get('/gifts/edit/:id', ensureLoggedIn, function(req, res) {
 
 router.post('/gifts/save', ensureLoggedIn, function(req, res) {
 	var gift = new Gift(req.body);
-	gift.owner = req.user.email;
-	gift.ownerName = req.user.name;
 	if (!req.body.id) {
+		gift.owner = req.user.email;
+		gift.ownerName = req.user.name;
 		gift.save()
+			.then(function(gift) {
+				return List.findOneAndUpdate({ _id: req.body.list }, {$addToSet: {gifts: gift.id}}, { new: false });
+			})
 			.then(function() {
 				res.redirect('/gifts/manage');
 			})
@@ -214,6 +219,9 @@ router.post('/gifts/save', ensureLoggedIn, function(req, res) {
 			});
 	} else {
 		Gift.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true })
+			.then(function(gift) {
+				return List.findOneAndUpdate({ _id: req.body.list }, {$addToSet: {gifts: gift.id}}, { new: false });
+			})
 			.then(function() {
 				res.redirect('/gifts/manage');
 			})
@@ -226,6 +234,9 @@ router.post('/gifts/save', ensureLoggedIn, function(req, res) {
 router.get('/gifts/delete/:id', ensureLoggedIn, function(req, res) {
 	Gift.findOneAndRemove({ _id: req.params.id, owner: req.user.email })
 		.exec()
+		.then(function(gift) {
+			return List.findOneAndUpdate({ _id: req.body.list }, {$pull: {gifts: gift.id}}, { new: false });
+		})
 		.then(function() {
 			res.redirect('/gifts/manage');
 		})
