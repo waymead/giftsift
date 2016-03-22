@@ -14,9 +14,11 @@ block main
 						- var url = listLink + '/lists/join/' + list.id;
 						ul.mdl-list
 							li.mdl-list__item
-								a(target="_new", href="mailto:?subject=GiftSift - #{list.name}&body=#{list.owner} has shared an GiftSift list with you.</br>Click <a href='#{url}'>here</a> to join the list and see what they've got on their wish list.") Email
+								a(target="_new", href="mailto:?subject=GiftSift - #{list.name}&body=#{list.owner} has shared an GiftSift list with you.&body=Click here to join the list and see what they've got on their wish list #{url}") Email
 							//li.mdl-list__item
 								a(href="https://www.facebook.com/sharer/sharer.php?u=View my wish list on GiftSift #{url}") Facebook
+							li.mdl-list__item
+								a(href="whatsapp://send?text=View my wish list on GiftSift #{url}") WhatsApp			
 							li.mdl-list__item
 								a(href="https://twitter.com/home?status=View my wish list on GiftSift #{url}") Twitter			
 							li.mdl-list__item
