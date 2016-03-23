@@ -30,9 +30,9 @@ block main
 											else 
 												img.list-image(src="http://lorempixel.com/100/100/abstract/")
 											if gift.url
-												a.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
+												a.mdl-color-text--primary(href="#{gift.url}/#{gift.name}", target="_new")= gift.name
 											else
-												span.mdl-color-text--primary(href="#{gift.url}", target="_new")= gift.name
+												span.mdl-color-text--primary(href="#{gift.url}/#{gift.name}", target="_new")= gift.name
 											if gift.notes
 												span.mdl-layout--large-screen-only &nbsp;(#{gift.notes})
 												

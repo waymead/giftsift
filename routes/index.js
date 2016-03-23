@@ -104,7 +104,7 @@ router.get('/lists/delete/:id', ensureLoggedIn, function(req, res) {
 		});
 });
 
-router.get('/lists/share/:id', ensureLoggedIn, function(req, res) {
+router.get('/lists/share/:id/:name?', ensureLoggedIn, function(req, res) {
 	List.findOne({ _id: req.params.id, owner: req.user.email })
 		.exec()
 		.then(function(list) {
@@ -145,7 +145,7 @@ router.get('/lists/leave/:id', ensureLoggedIn, function(req, res) {
 		});
 });
 
-router.get('/lists/:id', ensureLoggedIn, function(req, res) {
+router.get('/lists/:id/:name?', ensureLoggedIn, function(req, res) {
 	var groupedGifts;
 	var numGifts;
 	Gift.find({ list: req.params.id, owner: { '$ne': req.user.email } })

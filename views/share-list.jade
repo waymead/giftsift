@@ -11,7 +11,7 @@ block main
 					.mdl-card__title.mdl-color--primary.mdl-color-text--white
 						h2.mdl-card__title-text Share your list
 					.mdl-card__supporting-text
-						- var url = listLink + '/lists/join/' + list.id;
+						- var url = listLink + '/lists/join/' + list.id + "/" + list.name
 						ul.mdl-list
 							li.mdl-list__item
 								a(target="_new", href="mailto:?subject=GiftSift - #{list.name}&body=#{list.owner} has shared an GiftSift list with you.&body=Click here to join the list and see what they've got on their wish list #{url}") Email
