@@ -73,7 +73,7 @@ router.post('/lists/save', ensureLoggedIn, function(req, res) {
 	if (!req.body.id) {
 		list.save()
 			.then(function() {
-				res.redirect('/lists/manage?created=true');
+				res.redirect('/lists/manage?new=true');
 			})
 			.catch(function(err) {
 				logger.error(err);
@@ -212,7 +212,7 @@ router.post('/gifts/save', ensureLoggedIn, function(req, res) {
 				return List.findOneAndUpdate({ _id: req.body.list }, {$addToSet: {gifts: gift.id}}, { new: false });
 			})
 			.then(function() {
-				res.redirect('/gifts/manage');
+				res.redirect('/gifts/manage?new=true');
 			})
 			.catch(function(err) {
 				logger.error(err);
