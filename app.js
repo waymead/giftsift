@@ -1,8 +1,8 @@
 'use strict';
 
 require('dotenv').load({ silent: true });
+require('newrelic');
 require('./model');
-require('./lib/newrelic.js');
 
 var logger = require('./lib/logging.js');
 

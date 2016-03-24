@@ -55,6 +55,7 @@ router.post('/save', ensureLoggedIn, function(req, res) {
 		gift.ownerName = req.user.name;
 		gift.save()
 			.then(function(gift) {
+				logger.info({ message: 'Gift created', gift: gift.name });
 				return List.findOneAndUpdate({ _id: req.body.list }, {$addToSet: {gifts: gift.id}}, { new: false });
 			})
 			.then(function() {
