@@ -55,8 +55,8 @@ router.post('/save', ensureLoggedIn, function(req, res) {
 		gift.ownerName = req.user.name;
 		gift.save()
 			.then(function(gift) {
-				logger.info({ message: 'Gift created', gift: gift.name });
-				return List.findOneAndUpdate({ _id: req.body.list }, {$addToSet: {gifts: gift.id}}, { new: false });
+				logger.info('Gift created', { gift: gift.name });
+				return List.findOneAndUpdate({ _id: req.body.list }, { $addToSet: { gifts: gift.id } }, { new: false });
 			})
 			.then(function() {
 				res.redirect('/gifts/manage?new=true');
@@ -67,7 +67,7 @@ router.post('/save', ensureLoggedIn, function(req, res) {
 	} else {
 		Gift.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true })
 			.then(function(gift) {
-				return List.findOneAndUpdate({ _id: req.body.list }, {$addToSet: {gifts: gift.id}}, { new: false });
+				return List.findOneAndUpdate({ _id: req.body.list }, { $addToSet: { gifts: gift.id } }, { new: false });
 			})
 			.then(function() {
 				res.redirect('/gifts/manage');
@@ -82,7 +82,7 @@ router.get('/delete/:id', ensureLoggedIn, function(req, res) {
 	Gift.findOneAndRemove({ _id: req.params.id, owner: req.user.email })
 		.exec()
 		.then(function(gift) {
-			return List.findOneAndUpdate({ _id: req.body.list }, {$pull: {gifts: gift.id}}, { new: false });
+			return List.findOneAndUpdate({ _id: req.body.list }, { $pull: { gifts: gift.id } }, { new: false });
 		})
 		.then(function() {
 			res.redirect('/gifts/manage');

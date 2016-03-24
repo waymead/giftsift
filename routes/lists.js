@@ -58,7 +58,7 @@ router.post('/save', ensureLoggedIn, function(req, res) {
 	if (!req.body.id) {
 		list.save()
 			.then(function(list) {
-				logger.info({ message: 'List created', lists: list.name });
+				logger.info('List created', { list: list.name });
 				res.redirect('/lists/manage?new=true');
 			})
 			.catch(function(err) {
