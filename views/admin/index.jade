@@ -1,0 +1,16 @@
+extends ../layout
+
+block main
+	#content
+		.mdl-grid
+			.mdl-cell.mdl-cell--12-col
+				h2.mdl-color-text--primary Admin
+				
+			.mdl-cell.mdl-cell--6-col
+				h4 Lists
+				span.counter.list-counter
+					span= lists.length
+			.mdl-cell.mdl-cell--6-col
+				h4 Gifts
+				span.counter.gift-counter
+					span= gifts.length

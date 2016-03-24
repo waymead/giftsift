@@ -47,6 +47,9 @@ app.set('view engine', 'jade');
 app.use(require('./lib/middleware.js'));
 
 app.use('/', require('./routes'));
+app.use('/lists', require('./routes/lists'));
+app.use('/gifts', require('./routes/gifts'));
+app.use('/admin', require('./routes/admin'));
 app.use('/auth', require('./routes/auth'));
 
 app.use(express.static(__dirname + '/public'));
