@@ -11,7 +11,7 @@ var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.use(function(req, res, next) {
-	if (req.user.roles.indexOf('admin') >= 0) {
+	if (req.user && req.user.roles && req.user.roles.indexOf('admin') >= 0) {
 		next();
 	} else {
 		res.sendStatus(403);
