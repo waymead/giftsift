@@ -1,6 +1,6 @@
 {
   "name": "giftsift",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "GiftSift",
   "main": "app.js",
   "engines": {
