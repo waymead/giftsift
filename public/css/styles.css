@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .mdl-grid {
 	justify-content: center;
-	max-width: 1200px;
+	max-width: 960px;
 }
 .mdl-card {
 	min-height: auto;
