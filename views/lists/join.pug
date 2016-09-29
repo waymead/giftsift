@@ -18,6 +18,6 @@ block main
 						p Are you sure you want to join?
 					.mdl-card__actions
 						form(action="/lists/join", method="post")
-							input(type="hidden", id="id", name="id", value="#{list.id}")
+							input(type="hidden", id="id", name="id", value=list.id)
 							input.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="submit", value="Join")
 							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/") Cancel

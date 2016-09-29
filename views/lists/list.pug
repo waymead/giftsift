@@ -19,24 +19,24 @@ block main
 								tr
 									td.mdl-data-table__cell--non-numeric
 										if gift.image
-											img.list-image(src="#{gift.image}")
+											img.list-image(src=gift.image)
 										else 
 											img.list-image(src="/images/default-gift.png")
 										if gift.url
-											a.mdl-color-text--primary(href="#{gift.url}/#{gift.name}", target="_new")= gift.name
+											a.mdl-color-text--primary(href=gift.url + "/" + gift.name, target="_new")= gift.name
 										else
-											span.mdl-color-text--primary(href="#{gift.url}/#{gift.name}", target="_new")= gift.name
+											span.mdl-color-text--primary(href=gift.url + "/" + gift.name, target="_new")= gift.name
 										if gift.notes
 											span.mdl-layout--large-screen-only &nbsp;(#{gift.notes})
 											
 									td
 										if gift.boughtBy === user.email
 											a.mdl-button.mdl-js-button.mdl-button--accent.mdl-layout--large-screen-only Bought
-											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(href="/gifts/replace/#{gift.id}")
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(href="/gifts/replace/" + gift.id)
 												i.material-icons.md-light remove
 										else if typeof(gift.boughtBy) == 'undefined'
 											a.mdl-button.mdl-js-button.mdl-button--primary.mdl-layout--large-screen-only Available
-											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-color-text--white(href="/gifts/buy/#{gift.id}")
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-color-text--white(href="/gifts/buy/" + gift.id)
 												i.material-icons.md-light add
 										else 
 											span.mdl-button.mdl-js-button.mdl-button--gray Unavailable									

@@ -20,8 +20,8 @@ block main
 								input.mdl-textfield__input(type="text", id="name", name="name", required, value="#{list? list.name: ''}")
 								label.mdl-textfield__label(for="name") Name
 							each listType in ['christmas', 'easter', 'wedding', 'birthday']
-								label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for="#{listType}")
-									input.mdl-radio__button(type="radio", id="#{listType}", name="type", required, value="#{listType}" checked=(list && list.type===listType ? "checked" : undefined))
+								label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType)
+									input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType checked=(list && list.type===listType ? "checked" : undefined))
 									span.mdl-radio__label= listType
 							.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 								textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5").

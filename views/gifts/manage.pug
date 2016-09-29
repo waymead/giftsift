@@ -23,15 +23,15 @@ block main
 								th 
 						tbody
 							each gift in gifts
-								tr(data-mdl-data-table-selectable-value="gift-#{gift.id}")
+								tr(data-mdl-data-table-selectable-value="gift" + gift.id)
 									td.mdl-data-table__cell--non-numeric
-										a.mdl-color-text--primary(href="edit/#{gift.id}")= gift.name
+										a.mdl-color-text--primary(href="edit/" + gift.id)= gift.name
 										br
 										span= gift.list.name
 									td
-										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/#{gift.id}")
+										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="edit/" + gift.id)
 											i.material-icons.md-light edit									
-										button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id="#{gift.id}", data-name="#{gift.name}")
+										button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id=gift.id, data-name=gift.name)
 											i.material-icons.md-light delete
 
 				.mdl-cell.mdl-cell--12-col
