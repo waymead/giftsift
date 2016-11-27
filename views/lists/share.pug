@@ -11,16 +11,14 @@ block main
 					.mdl-card__title.mdl-color--primary.mdl-color-text--white
 						h2.mdl-card__title-text Share your list
 					.mdl-card__supporting-text
-						- var url = listLink + '/lists/join/' + list.id + "/" + list.name
+						- var url = listLink + '/lists/join/' + list.id + "#" + list.name
 						ul.mdl-list
 							li.mdl-list__item
-								a(target="_new", href="mailto:?subject=GiftSift - #{list.name}&body=#{list.owner} has shared an GiftSift list with you.&body=Click here to join the list and see what they've got on their wish list #{url}") Email
-							//li.mdl-list__item
-								a(href="https://www.facebook.com/sharer/sharer.php?u=View my wish list on GiftSift #{url}") Facebook
+								a(target="_new", href=url) Link
 							li.mdl-list__item
-								a(href="whatsapp://send?text=View my wish list on GiftSift #{url}") WhatsApp			
+								a(href="whatsapp://send?text=View my wish list on GiftSift" + url) WhatsApp			
 							li.mdl-list__item
-								a(href="https://twitter.com/home?status=View my wish list on GiftSift #{url}") Twitter			
+								a(href="https://twitter.com/home?status=View my wish list on GiftSift " + url) Twitter			
 							li.mdl-list__item
-								a(href="https://plus.google.com/share?url=#{url}") Google+
+								a(href="https://plus.google.com/share?url=" + url) Google+
 			

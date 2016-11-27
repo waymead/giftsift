@@ -15,26 +15,46 @@ block main
 						h2.mdl-card__title-text Add / edit list
 					.mdl-card__supporting-text
 						form(action="/lists/save", method="post")
-							input(type="hidden", id="id", name="id", value="#{list? list.id: ''}")
-							.mdl-textfield.mdl-js-textfield
-								input.mdl-textfield__input(type="text", id="name", name="name", required, value="#{list? list.name: ''}")
-								label.mdl-textfield__label(for="name") Name
-							each listType in ['christmas', 'easter', 'wedding', 'birthday']
-								label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType)
-									input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType checked=(list && list.type===listType ? "checked" : undefined))
-									span.mdl-radio__label= listType
-							.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-								textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5").
-									#{list? list.notes: ''}
-								label.mdl-textfield__label(for="notes") Notes
-							//.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-								label.mdl-textfield__label(for="members") Members
-								select.mdl-textfield__input(type="text", id="members", name="members", multiple, required)
-									if list && list.members
-										each member in list.members
-											option(value="#{member}", selected)= member
-									else
-										option(value="#{owner}", selected)= owner		
+							if list
+								input(type="hidden", id="id", name="id", value=list.id)
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="text", id="name", name="name", required, value=list.name)
+									label.mdl-textfield__label(for="name") Name
+								each listType in ['christmas', 'easter', 'wedding', 'birthday']
+									label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType)
+										input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType checked=(list && list.type===listType ? "checked" : undefined))
+										span.mdl-radio__label= listType
+								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")= list.notes
+									label.mdl-textfield__label(for="notes") Notes
+								//.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									label.mdl-textfield__label(for="members") Members
+									select.mdl-textfield__input(type="text", id="members", name="members", multiple, required)
+										if list && list.members
+											each member in list.members
+												option(value="#{member}", selected)= member
+										else
+											option(value="#{owner}", selected)= owner		
+							else
+								input(type="hidden", id="id", name="id", value="")
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="text", id="name", name="name", required, value="")
+									label.mdl-textfield__label(for="name") Name
+								each listType in ['christmas', 'easter', 'wedding', 'birthday']
+									label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType)
+										input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType)
+										span.mdl-radio__label= listType
+								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5") 
+									label.mdl-textfield__label(for="notes") Notes
+								//.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									label.mdl-textfield__label(for="members") Members
+									select.mdl-textfield__input(type="text", id="members", name="members", multiple, required)
+										if list && list.members
+											each member in list.members
+												option(value="#{member}", selected)= member
+										else
+											option(value="#{owner}", selected)= owner		
 							input.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="submit", value="Save")
 							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/lists/manage") Cancel
 			

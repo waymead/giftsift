@@ -56,6 +56,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('port', (process.env.PORT || 3000));
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function () {
 	logger.log('info', 'Node app is running at localhost:' + app.get('port'));
 });

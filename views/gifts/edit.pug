@@ -7,7 +7,7 @@ block main
 	#content
 		.mdl-grid
 			.mdl-cell.mdl-cell--12-col
-				h2.mdl-color-text--primary #{gift? 'Edit gift': 'Add gift'}
+				h2.mdl-color-text--primary Add / Edit gift
 				
 			.mdl-cell.mdl-cell--4-col
 				.mdl-card.mdl-shadow--4dp
@@ -15,29 +15,48 @@ block main
 						h2.mdl-card__title-text Add / edit list
 					.mdl-card__supporting-text
 						form(action="/gifts/save", method="post")
-							input(type="hidden", id="id", name="id", value="#{gift? gift.id: ''}")
-							.mdl-textfield.mdl-js-textfield
-								input.mdl-textfield__input(type="text", id="name", name="name", required, value="#{gift? gift.name: ''}")
-								label.mdl-textfield__label(for="name") Name
-							.mdl-textfield.mdl-js-textfield
-								input.mdl-textfield__input(type="url", id="url", name="url", value="#{gift? gift.url: ''}")
-								label.mdl-textfield__label(for="url") URL
-							.mdl-textfield.mdl-js-textfield
-								input.mdl-textfield__input(type="url", id="image", name="image", value="#{gift? gift.image: ''}")
-								label.mdl-textfield__label(for="image") Image URL
-							.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-								label.mdl-textfield__label(for="members") List
-								select.mdl-textfield__input(type="text", id="list", name="list", required)
-									each list in lists
-										if gift && list.id === gift.list.id
-											option(value="#{list.id}", selected)= list.name
-										else
-											option(value="#{list.id}")= list.name
-							.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-								textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5").
-									#{gift? gift.notes: ''}
-								label.mdl-textfield__label(for="notes") Notes
-									
+							if gift
+								input(type="hidden", id="id", name="id", value=gift.id)
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="text", id="name", name="name", required, value=gift.name)
+									label.mdl-textfield__label(for="name") Name
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="url", id="url", name="url", value=gift.url)
+									label.mdl-textfield__label(for="url") URL
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="url", id="image", name="image", value=gift.image)
+									label.mdl-textfield__label(for="image") Image URL
+								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									label.mdl-textfield__label(for="members") List
+									select.mdl-textfield__input(type="text", id="list", name="list", required)
+										each list in lists
+											if gift && list.id === gift.list.id
+												option(value=list.id, selected)= list.name
+											else
+												option(value=list.id)= list.name
+								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")= gift.notes
+									label.mdl-textfield__label(for="notes") Notes
+							else
+								input(type="hidden", id="id", name="id", value="")
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="text", id="name", name="name", required, value="")
+									label.mdl-textfield__label(for="name") Name
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="url", id="url", name="url", value="")
+									label.mdl-textfield__label(for="url") URL
+								.mdl-textfield.mdl-js-textfield
+									input.mdl-textfield__input(type="url", id="image", name="image", value="")
+									label.mdl-textfield__label(for="image") Image URL
+								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									label.mdl-textfield__label(for="members") List
+									select.mdl-textfield__input(type="text", id="list", name="list", required)
+										each list in lists
+											option(value="")= list.name
+								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")
+										
+									label.mdl-textfield__label(for="notes") Notes
 							input.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--primary.mdl-js-ripple-effect(type="submit", value="Save")
 							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/gifts/manage") Cancel
 		
