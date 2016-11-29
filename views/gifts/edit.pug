@@ -52,7 +52,7 @@ block main
 									label.mdl-textfield__label(for="members") List
 									select.mdl-textfield__input(type="text", id="list", name="list", required)
 										each list in lists
-											option(value="")= list.name
+											option(value=list.id)= list.name
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")
 										
