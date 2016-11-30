@@ -1,0 +1,13 @@
+extends ../layout
+
+block main
+	#content
+		.mdl-grid
+			.mdl-cell.mdl-cell--12-col
+				h2.mdl-color-text--primary Admin - Lists
+				
+			.mdl-cell.mdl-cell--6-col
+				h4 Lists
+				ul
+					each list in lists
+						li=list.name
