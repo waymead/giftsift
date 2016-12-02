@@ -1,6 +1,4 @@
 'use strict';
-var _ = require('underscore');
-
 var logger = require('../lib/logging.js');
 var List = require('../model/aiwf.js').List;
 var Gift = require('../model/aiwf.js').Gift;
@@ -97,7 +95,7 @@ router.get('/buy/:id/:list', ensureLoggedIn, function (req, res) {
 	Gift.findOneAndUpdate({ _id: req.params.id }, { $set: { boughtBy: req.user.email } })
 		.populate('list')
 		.exec()
-		.then(function (gift) {
+		.then(function () {
 			res.redirect('/lists/' + req.params.list);
 		})
 		.catch(function (err) {
@@ -110,7 +108,7 @@ router.get('/replace/:id/:list', ensureLoggedIn, function (req, res) {
 	Gift.findOneAndUpdate({ _id: req.params.id }, { $unset: { boughtBy: 1 } })
 		.populate('list')
 		.exec()
-		.then(function (gift) {
+		.then(function () {
 			res.redirect('/lists/' + req.params.list);
 		})
 		.catch(function (err) {
