@@ -26,10 +26,14 @@ var giftSchema = new Schema({
 	image: String,
 	type: String,
 	notes: String,
-	list: {
+	list: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'List'
-	},
+	}],
+	lists: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'List'
+	}],
 	created: {
 		type: Date,
 		default: Date.now()

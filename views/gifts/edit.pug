@@ -28,9 +28,13 @@ block main
 									label.mdl-textfield__label(for="image") Image URL
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									label.mdl-textfield__label(for="members") List
-									select.mdl-textfield__input(type="text", id="list", name="list", required)
+									select.mdl-textfield__input(type="text", id="list", name="list", required, multiple)
 										each list in lists
-											if gift && list.id === gift.list.id
+											- var ii = false
+											each l in gift.list
+												if l.id == list.id
+													- ii = true
+											if ii
 												option(value=list.id, selected)= list.name
 											else
 												option(value=list.id)= list.name
