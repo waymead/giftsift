@@ -30,7 +30,7 @@ block main
 										if list.notes
 											span.mdl-layout--large-screen-only &nbsp;(#{list.notes})
 									td
-										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button(href="/lists/" + list.id + "#" + list.name)
+										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button.mdl-layout--large-screen-only(href="/lists/" + list.id + "#" + list.name)
 											i.material-icons.md-light keyboard_arrow_right									
 										button.mdl-button.mdl-js-button.mdl-button--icon(id="list" + list.id)
 											i.material-icons more_vert

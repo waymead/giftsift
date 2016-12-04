@@ -1,7 +1,4 @@
 'use strict';
-var _ = require('underscore');
-
-var logger = require('../lib/logging.js');
 
 var express = require('express');
 var router = express.Router();
