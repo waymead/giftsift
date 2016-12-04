@@ -19,9 +19,9 @@ block main
 								tr
 									td.mdl-data-table__cell--non-numeric
 										if gift.image
-											img.list-image(src=gift.image)
+											img.mdl-layout--large-screen-only.list-image(src=gift.image)
 										else 
-											img.list-image(src="/images/default-gift.png")
+											img.mdl-layout--large-screen-only.list-image(src="/images/default-gift.png")
 										if gift.url
 											a.mdl-color-text--primary(href=gift.url + "/" + gift.name, target="_new")= gift.name
 										else
