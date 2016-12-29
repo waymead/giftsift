@@ -2,20 +2,20 @@ extends layout
 
 block main
 	section#main
-		script(src="//cdn.auth0.com/js/lock-9.1.min.js")
+		script(src="https://cdn.auth0.com/js/lock/10.6/lock.min.js")
 		script.
-			var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}');
-			function signin() {
-				lock.showSignin({
+			var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', {
+				auth: {
 					callbackURL: '#{env.AUTH0_CALLBACK_URL}',
 					enableReturnUserExperience: true,
 					icon: '/images/logo.png',
 					responseType: 'code',
 					socialBigButtons: true,
 					sso: true,
-					authParams: {
+					closable: false,
+					params: {
 						scope: 'openid name email picture'
 					}
-				});
-			}
-			window.onload = signin;
+				}
+			});
+			window.onload = lock.show();
