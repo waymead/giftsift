@@ -18,6 +18,14 @@ var listSchema = new Schema({
 	ownerName: String
 }, { collection: 'lists' });
 
+listSchema.methods.isOwner = function (email) {
+	return this.owner == email;
+};
+
+listSchema.methods.isMember = function (email) {
+	return this.members.indexOf(email) > -1;
+};
+
 var List = mongoose.model('List', listSchema);
 
 var giftSchema = new Schema({
@@ -42,6 +50,10 @@ var giftSchema = new Schema({
 	ownerName: String,
 	boughtBy: String
 }, { collection: 'gifts' });
+
+giftSchema.methods.isOwner = function (email) {
+	return this.owner == email;
+};
 
 var Gift = mongoose.model('Gift', giftSchema);
 

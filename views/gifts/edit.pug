@@ -1,7 +1,7 @@
 extends ../layout
 
 block append head
-	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css")
+	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css")
 
 block main
 	#content
@@ -28,7 +28,7 @@ block main
 									label.mdl-textfield__label(for="image") Image URL
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									label.mdl-textfield__label(for="list") List
-									select.mdl-textfield__input(type="text", id="list", name="list", required, multiple)
+									select.mdl-textfield__input.multi(type="text", id="list", name="list", required, multiple)
 										each list in lists
 											- var ii = false
 											each l in gift.list
@@ -54,22 +54,19 @@ block main
 									label.mdl-textfield__label(for="image") Image URL
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									label.mdl-textfield__label(for="list") List
-									select.mdl-textfield__input(type="text", id="list", name="list", required)
+									select.mdl-textfield__input.multi(type="text", id="list", name="list", required, multiple)
 										each list in lists
 											option(value=list.id)= list.name
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")
-										
 									label.mdl-textfield__label(for="notes") Notes
 							input.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--primary.mdl-js-ripple-effect(type="submit", value="Save")
-							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/gifts/manage") Cancel
+							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/gifts") Cancel
 		
 block append script
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js")
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js")
 	script.
-		$("#list").select2({
-			tags: true,
-			tokenSeparators: [',', ' '],
+		$(".multi").select2({
 			placeholder: 'Select lists'
 		});

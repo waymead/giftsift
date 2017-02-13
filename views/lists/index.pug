@@ -8,8 +8,8 @@ block main
 				
 			if lists.length == 0
 				.mdl-cell.mdl-cell--12-col
-					p You're not a member of any lists.
-					p You can create your own one 
+					p You haven't created a list yet, or joined anyone else's.
+					p You can create one 
 						a(href="/lists/add") here
 						span , or join someone else's list by following the link in one of their invitations.
 					
@@ -30,10 +30,92 @@ block main
 										if list.notes
 											span.mdl-layout--large-screen-only &nbsp;(#{list.notes})
 									td
-										a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button.mdl-layout--large-screen-only(href="/lists/" + list.id + "#" + list.name)
-											i.material-icons.md-light keyboard_arrow_right									
-										button.mdl-button.mdl-js-button.mdl-button--icon(id="list" + list.id)
+										//a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button.mdl-layout--large-screen-only(href="/lists/" + list.id + "#" + list.name)
+											i.material-icons.md-light keyboard_arrow_right
+										if list.isOwner(owner)								
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-layout--large-screen-only(href="/lists/share/" + list.id + "#" + list.name)
+												i.material-icons.md-light share									
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-layout--large-screen-only(href="/lists/edit/" + list.id + "#" + list.name)
+												i.material-icons.md-light edit									
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button.mdl-layout--large-screen-only(data-id=list.id, data-name=list.name)
+												i.material-icons.md-light delete
+										if !list.isOwner(owner)									
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.leave-button.mdl-layout--large-screen-only(data-id=list.id, data-name=list.name)
+												i.material-icons.md-light redo									
+										button.mdl-layout--small-screen-only.mdl-button.mdl-js-button.mdl-button--icon(id="list" + list.id)
 											i.material-icons more_vert
 										ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list" + list.id)
-											li.mdl-menu__item
-												a.mdl-color-text--primary(href="lists/leave/" + list.id) Leave list
+											//li.mdl-menu__item
+												a.mdl-color-text--primary(href="lists/" + list.id) View
+											if list.isOwner(owner)								
+												li.mdl-menu__item
+													a.mdl-color-text--primary(href="lists/share/" + list.id) Share
+												li.mdl-menu__item
+													a.mdl-color-text--primary(href="lists/edit/" + list.id) Edit
+												li.mdl-menu__item
+													a.mdl-color-text--primary.delete-button(data-id=list.id, data-name=list.name) Delete
+											if !list.isOwner(owner)	
+												li.mdl-menu__item
+													a.mdl-color-text--primary.leave-button(href="lists/leave/" + list.id) Leave
+				.mdl-cell.mdl-cell--12-col
+					a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/lists/add")
+						i.material-icons.md-light add
+
+				dialog#delete-dialog.mdl-dialog
+					h4.mdl-dialog__title#dialog-title
+					.mdl-dialog__content
+						p Are you sure you want to delete the list?
+						p This will delete all gifts in the list, even if other people have bought them.
+						p#list-name
+					.mdl-dialog__actions
+						a.mdl-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent.ok-button(href="/lists/delete/") Delete
+						button.mdl-button.close-button.close(type="button") Cancel
+								
+				dialog#leave-dialog.mdl-dialog
+					h4.mdl-dialog__title#dialog-title
+					.mdl-dialog__content
+						p Are you sure you want to leave this list?
+						p#list-name
+					.mdl-dialog__actions
+						a.mdl-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent.ok-button(href="/lists/leave/") Delete
+						button.mdl-button.close-button.close(type="button") Cancel
+								
+block append script
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js")
+	script.
+		var deleteDialog = document.querySelector('#delete-dialog');
+		$('.delete-button').each(function() {
+			$(this).on('click', function() {
+				deleteList($(this).attr('data-id'), $(this).attr('data-name'));
+			});
+		});
+		function deleteList(id, name) {
+			const deleteDialog = document.querySelector('#delete-dialog');
+			if (! deleteDialog.showModal) {
+				dialogPolyfill.registerDialog(deleteDialog);
+			}
+			deleteDialog.showModal();
+			deleteDialog.querySelector('.close-button').addEventListener('click', function() {
+				deleteDialog.close();       
+			});
+			deleteDialog.querySelector('#dialog-title').innerText = name;
+			deleteDialog.querySelector('.ok-button').href='/lists/delete/' + id;
+		}
+
+		$('.leave-button').each(function() {
+			$(this).on('click', function() {
+				leaveList($(this).attr('data-id'), $(this).attr('data-name'));
+			});
+		});
+		function leaveList(id, name) {
+			const leaveDialog = document.querySelector('#leave-dialog');
+			if (! leaveDialog.showModal) {
+				dialogPolyfill.registerDialog(leaveDialog);
+			}
+			leaveDialog.showModal();
+			leaveDialog.querySelector('.close-button').addEventListener('click', function() {
+				leaveDialog.close();       
+			});
+			leaveDialog.querySelector('#dialog-title').innerText = name;
+			leaveDialog.querySelector('.ok-button').href='/lists/leave/' + id;
+		}
