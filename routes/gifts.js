@@ -70,7 +70,7 @@ router.post('/save', ensureLoggedIn, function (req, res) {
 				return List.update({ _id: { '$in': req.body.list } }, { $addToSet: { gifts: gift.id } }, { new: false });
 			})
 			.then(function () {
-				res.redirect('/lists/' + gift.list[0]);
+				res.redirect('/lists/' + theGift.list[0]);
 			})
 			.catch(function (err) {
 				logger.error(err);
