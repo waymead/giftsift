@@ -8,9 +8,9 @@ block header
 			.mdl-layout-spacer
 			nav.mdl-navigation.mdl-layout--large-screen-only
 				a.mdl-navigation__link(href="/") Home
-				a.mdl-navigation__link(href="/lists") View lists
-				a.mdl-navigation__link(href="/lists/manage") Manage my lists
-				a.mdl-navigation__link(href="/gifts/manage") Manage my gifts
+				//a.mdl-navigation__link(href="/lists") View lists
+				//a.mdl-navigation__link(href="/lists/manage") Manage my lists
+				//a.mdl-navigation__link(href="/gifts/manage") Manage my gifts
 				if user && user.roles && user.roles.indexOf('admin') >= 0
 					a.mdl-navigation__link(href="/admin") Admin
 				if !user
@@ -21,9 +21,9 @@ block header
 		.mdl-layout__title.mdl-color-text--white GiftSift
 		nav.mdl-navigation
 			a.mdl-navigation__link.mdl-color-text--white(href="/") Home
-			a.mdl-navigation__link.mdl-color-text--white(href="/lists") View lists
-			a.mdl-navigation__link.mdl-color-text--white(href="/lists/manage") Manage my lists
-			a.mdl-navigation__link.mdl-color-text--white(href="/gifts/manage") Manage my gifts
+			//a.mdl-navigation__link.mdl-color-text--white(href="/lists") View lists
+			//a.mdl-navigation__link.mdl-color-text--white(href="/lists/manage") Manage my lists
+			//a.mdl-navigation__link.mdl-color-text--white(href="/gifts/manage") Manage my gifts
 			if user && user.roles && user.roles.indexOf('admin') >= 0
 				a.mdl-navigation__link.mdl-color-text--white(href="/admin") Admin
 			if !user

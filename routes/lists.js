@@ -13,7 +13,7 @@ var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 router.get('/', ensureLoggedIn, function (req, res) {
 	List.find({ members: req.user.email }, {}, { sort: 'name' })
 		.then(function (lists) {
-			res.render('lists/index', { lists: lists });
+			res.render('lists/index', { lists: lists, owner: req.user.email });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -28,7 +28,7 @@ router.get('/manage', ensureLoggedIn, function (req, res) {
 			return List.find({ members: req.user.email }, {}, { sort: 'name' });
 		})
 		.then(function (lists) {
-			res.render('lists/manage', { ownedLists: ownedLists, memberOfLists: lists, owner: req.user.email });
+			res.render('lists', { ownedLists: ownedLists, memberOfLists: lists, owner: req.user.email });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -59,7 +59,7 @@ router.post('/save', ensureLoggedIn, function (req, res) {
 		list.save()
 			.then(function (list) {
 				logger.info('List created', { list: list.name });
-				res.redirect('/lists/manage?new=true');
+				res.redirect('/lists?new=true');
 			})
 			.catch(function (err) {
 				logger.error(err);
@@ -67,7 +67,7 @@ router.post('/save', ensureLoggedIn, function (req, res) {
 	} else {
 		List.findOneAndUpdate({ _id: req.body.id }, req.body, { new: false })
 			.then(function () {
-				res.redirect('/lists/manage');
+				res.redirect('/lists');
 			})
 			.catch(function (err) {
 				logger.error(err);
@@ -82,7 +82,7 @@ router.get('/delete/:id', ensureLoggedIn, function (req, res) {
 			return Gift.find({ list: list.id }).remove();
 		})
 		.then(function () {
-			res.redirect('/lists/manage');
+			res.redirect('/lists');
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -133,7 +133,7 @@ router.get('/leave/:id', ensureLoggedIn, function (req, res) {
 router.get('/:id', ensureLoggedIn, function (req, res) {
 	var groupedGifts;
 	var numGifts;
-	Gift.find({ list: req.params.id, owner: { '$ne': req.user.email } })
+	Gift.find({ list: req.params.id })
 		.sort('owner')
 		.exec()
 		.then(function (gifts) {
