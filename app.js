@@ -60,12 +60,12 @@ app.use('/auth', require('./routes/auth'));
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(function (req, res, next) {
+app.use(function (req, res) {
 	res.status(404);
 	res.render('notfound');
 });
 
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
 	logger.error(err.stack);
 	if (err.status == 404) {
 		res.status(404);

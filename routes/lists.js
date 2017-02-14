@@ -35,11 +35,11 @@ router.get('/manage', ensureLoggedIn, function (req, res, next) {
 		});
 });
 
-router.get('/add', ensureLoggedIn, function (req, res, next) {
+router.get('/add', ensureLoggedIn, function (req, res) {
 	res.render('lists/edit', { owner: req.user.email });
 });
 
-router.get('/edit/:id', ensureLoggedIn, function (req, res) {
+router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 	List.findOne({ _id: req.params.id, owner: req.user.email })
 		.exec()
 		.then(function (list) {
