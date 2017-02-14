@@ -10,17 +10,17 @@ var router = express.Router();
 
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
-router.get('/', ensureLoggedIn, function (req, res) {
+router.get('/', ensureLoggedIn, function (req, res, next) {
 	List.find({ members: req.user.email }, {}, { sort: 'name' })
 		.then(function (lists) {
 			res.render('lists/index', { lists: lists, owner: req.user.email });
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.get('/manage', ensureLoggedIn, function (req, res) {
+router.get('/manage', ensureLoggedIn, function (req, res, next) {
 	var ownedLists;
 	List.find({ owner: req.user.email }, {}, { sort: 'name' })
 		.then(function (lists) {
@@ -31,11 +31,11 @@ router.get('/manage', ensureLoggedIn, function (req, res) {
 			res.render('lists', { ownedLists: ownedLists, memberOfLists: lists, owner: req.user.email });
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.get('/add', ensureLoggedIn, function (req, res) {
+router.get('/add', ensureLoggedIn, function (req, res, next) {
 	res.render('lists/edit', { owner: req.user.email });
 });
 
@@ -46,11 +46,11 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res) {
 			res.render('lists/edit', { list: list, owner: req.user.email });
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.post('/save', ensureLoggedIn, function (req, res) {
+router.post('/save', ensureLoggedIn, function (req, res, next) {
 	var list = new List(req.body);
 	list.owner = req.user.email;
 	list.ownerName = req.user.name;
@@ -62,7 +62,7 @@ router.post('/save', ensureLoggedIn, function (req, res) {
 				res.redirect('/lists?new=true');
 			})
 			.catch(function (err) {
-				logger.error(err);
+				return next(err);
 			});
 	} else {
 		List.findOneAndUpdate({ _id: req.body.id }, req.body, { new: false })
@@ -70,12 +70,12 @@ router.post('/save', ensureLoggedIn, function (req, res) {
 				res.redirect('/lists');
 			})
 			.catch(function (err) {
-				logger.error(err);
+				return next(err);
 			});
 	}
 });
 
-router.get('/delete/:id', ensureLoggedIn, function (req, res) {
+router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
 	List.findOneAndRemove({ _id: req.params.id, owner: req.user.email })
 		.exec()
 		.then(function (list) {
@@ -85,52 +85,52 @@ router.get('/delete/:id', ensureLoggedIn, function (req, res) {
 			res.redirect('/lists');
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.get('/share/:id/:name?', ensureLoggedIn, function (req, res) {
+router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
 	List.findOne({ _id: req.params.id, owner: req.user.email })
 		.exec()
 		.then(function (list) {
 			res.render('lists/share', { list: list, owner: req.user.email, listLink: process.env.LISTLINK_DOMAIN });
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.get('/join/:id', ensureLoggedIn, function (req, res) {
+router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
 	List.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.user.email } }, { new: false })
 		.then(function (list) {
 			res.render('lists/join', { list: list });
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.post('/join', ensureLoggedIn, function (req, res) {
+router.post('/join', ensureLoggedIn, function (req, res, next) {
 	List.findOneAndUpdate({ _id: req.body.id }, { $addToSet: { members: req.user.email } }, { new: false })
 		.then(function () {
 			res.redirect('/lists/' + req.body.id);
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.get('/leave/:id', ensureLoggedIn, function (req, res) {
+router.get('/leave/:id', ensureLoggedIn, function (req, res, next) {
 	List.findOneAndUpdate({ _id: req.params.id }, { $pull: { members: req.user.email } }, { new: false })
 		.then(function () {
 			res.redirect('/lists');
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 
-router.get('/:id', ensureLoggedIn, function (req, res) {
+router.get('/:id', ensureLoggedIn, function (req, res, next) {
 	var groupedGifts;
 	var numGifts;
 	Gift.find({ list: req.params.id })
@@ -145,7 +145,7 @@ router.get('/:id', ensureLoggedIn, function (req, res) {
 			res.render('lists/list', { list: list, gifts: groupedGifts, user: req.user, numGifts: numGifts });
 		})
 		.catch(function (err) {
-			logger.error(err);
+			return next(err);
 		});
 });
 

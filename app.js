@@ -1,6 +1,8 @@
 'use strict';
 
-require('dotenv').load({ silent: true });
+require('dotenv').load({
+	silent: true
+});
 require('newrelic');
 require('./model');
 
@@ -25,13 +27,17 @@ passport.use(strategy);
 var app = express();
 app.use(cookieParser());
 app.use(morgan('combined'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 app.use(bodyParser.json());
 app.use(favicon(__dirname + '/public/images/logo.png'));
 app.use(helmet());
 
 app.use(session({
-	store: new RedisStore({ url: process.env.REDIS_URL }),
+	store: new RedisStore({
+		url: process.env.REDIS_URL
+	}),
 	secret: process.env.REDIS_SESSION_SECRET,
 	resave: true,
 	saveUninitialized: true
@@ -53,6 +59,19 @@ app.use('/admin', require('./routes/admin'));
 app.use('/auth', require('./routes/auth'));
 
 app.use(express.static(__dirname + '/public'));
+
+app.use(function (req, res, next) {
+	res.status(404).send('Sorry can\'t find that!');
+});
+
+app.use(function (err, req, res, next) {
+	logger.error(err.stack);
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: {}
+	});
+});
 
 app.set('port', (process.env.PORT || 3000));
 

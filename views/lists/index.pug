@@ -26,7 +26,8 @@ block main
 									td.mdl-data-table__cell--non-numeric
 										img.list-image(src="/images/" + list.type + ".jpg")
 										//span.mdl-badge(data-badge="#{list.gifts.length}")
-										a.mdl-color-text--primary(href="/lists/" + list.id + "#" + list.name) #{list.name}
+										span.mdl-badge(data-badge=list.gifts.length)
+											a.mdl-color-text--primary(href="/lists/" + list.id + "#" + list.name) #{list.name}
 										if list.notes
 											span.mdl-layout--large-screen-only &nbsp;(#{list.notes})
 									td
