@@ -35,6 +35,11 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 		.populate('list', 'name', null, { sort: 'name' })
 		.exec()
 		.then(function (gift) {
+			if (gift == null) {
+				var err = new Error();
+				err.status = 404;
+				throw err;
+			}
 			theGift = gift;
 			return List.find({ members: req.user.email });
 		})

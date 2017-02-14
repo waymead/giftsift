@@ -43,6 +43,11 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 	List.findOne({ _id: req.params.id, owner: req.user.email })
 		.exec()
 		.then(function (list) {
+			if (list == null) {
+				var err = new Error();
+				err.status = 404;
+				throw err;
+			}
 			res.render('lists/edit', { list: list, owner: req.user.email });
 		})
 		.catch(function (err) {
