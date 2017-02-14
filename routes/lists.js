@@ -137,6 +137,11 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 		.sort('owner')
 		.exec()
 		.then(function (gifts) {
+			if (gifts.length == 0) {
+				var err = new Error();
+				err.status = 404;
+				throw err;
+			}
 			groupedGifts = _.groupBy(gifts, 'ownerName');
 			numGifts = gifts.length;
 			return List.findOne({ _id: req.params.id });
