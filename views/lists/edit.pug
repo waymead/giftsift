@@ -45,16 +45,8 @@ block main
 										input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType)
 										span.mdl-radio__label= listType
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5") 
+									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")
 									label.mdl-textfield__label(for="notes") Notes
-								//.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-									label.mdl-textfield__label(for="members") Members
-									select.mdl-textfield__input(type="text", id="members", name="members", multiple, required)
-										if list && list.members
-											each member in list.members
-												option(value="#{member}", selected)= member
-										else
-											option(value="#{owner}", selected)= owner		
 							input.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="submit", value="Save")
 							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/lists") Cancel
 			
