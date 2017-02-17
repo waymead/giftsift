@@ -52,6 +52,7 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 			res.render('lists/edit', { list: list, owner: req.user.email });
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -72,6 +73,7 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 				res.redirect('/lists');
 			})
 			.catch(function (err) {
+				logger.error(err);
 				return next(err);
 			});
 	} else {
@@ -81,6 +83,7 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 				res.redirect('/lists');
 			})
 			.catch(function (err) {
+				logger.error(err);
 				return next(err);
 			});
 	}
@@ -96,6 +99,7 @@ router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
 			res.redirect('/lists');
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -107,6 +111,7 @@ router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
 			res.render('lists/share', { list: list, owner: req.user.email, listLink: process.env.LISTLINK_DOMAIN });
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -117,6 +122,7 @@ router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
 			res.render('lists/join', { list: list });
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -127,6 +133,7 @@ router.post('/join', ensureLoggedIn, function (req, res, next) {
 			res.redirect('/lists/' + req.body.id);
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -137,6 +144,7 @@ router.get('/leave/:id', ensureLoggedIn, function (req, res, next) {
 			res.redirect('/lists');
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -156,6 +164,7 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 			res.render('lists/list', { list: list, gifts: groupedGifts, user: req.user, numGifts: numGifts });
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
