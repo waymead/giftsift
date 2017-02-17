@@ -63,6 +63,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(function (req, res, next) {
 	res.status(404);
 	res.render('notfound');
+	next();
 });
 
 app.use(function (err, req, res, next) {
@@ -70,12 +71,14 @@ app.use(function (err, req, res, next) {
 	if (err.status == 404) {
 		res.status(404);
 		res.render('notfound', {});
+		next();
 	} else {
 		res.status(err.status || 500);
 		res.render('error', {
 			message: err.message,
 			error: {}
 		});
+		next();
 	}
 });
 

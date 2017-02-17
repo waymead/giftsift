@@ -2,6 +2,8 @@
 var _ = require('underscore');
 
 var logger = require('../lib/logging.js');
+const service = require('../lib/giftsiftService.js');
+
 var List = require('../model/aiwf.js').List;
 var Gift = require('../model/aiwf.js').Gift;
 
@@ -11,7 +13,7 @@ var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/', ensureLoggedIn, function (req, res, next) {
-	List.find({ members: req.user.email }, {}, { sort: 'name' })
+	service.getLists(req.user.email)
 		.then(function (lists) {
 			res.render('lists/index', { lists: lists, owner: req.user.email });
 		})
@@ -20,7 +22,7 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
 		});
 });
 
-router.get('/manage', ensureLoggedIn, function (req, res, next) {
+/*router.get('/manage', ensureLoggedIn, function (req, res, next) {
 	var ownedLists;
 	List.find({ owner: req.user.email }, {}, { sort: 'name' })
 		.then(function (lists) {
@@ -33,14 +35,14 @@ router.get('/manage', ensureLoggedIn, function (req, res, next) {
 		.catch(function (err) {
 			return next(err);
 		});
-});
+});*/
 
 router.get('/add', ensureLoggedIn, function (req, res) {
 	res.render('lists/edit', { owner: req.user.email });
 });
 
 router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
-	List.findOne({ _id: req.params.id, owner: req.user.email })
+	service.getListById(req.params.id, req.user.email)
 		.exec()
 		.then(function (list) {
 			if (list == null) {
@@ -63,7 +65,7 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 	if (!req.body.id) {
 		list.save()
 			.then(function (list) {
-				logger.info('List created', { list: list.name });
+				logger.info('List created', { listName: list.name });
 				res.redirect('/lists?new=true');
 			})
 			.catch(function (err) {
@@ -142,11 +144,6 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 		.sort('owner')
 		.exec()
 		.then(function (gifts) {
-			if (gifts.length == 0) {
-				var err = new Error();
-				err.status = 404;
-				throw err;
-			}
 			groupedGifts = _.groupBy(gifts, 'ownerName');
 			numGifts = gifts.length;
 			return List.findOne({ _id: req.params.id });
