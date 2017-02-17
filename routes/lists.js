@@ -42,8 +42,7 @@ router.get('/add', ensureLoggedIn, function (req, res) {
 });
 
 router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
-	service.getListById(req.params.id, req.user.email)
-		.exec()
+	service.getList(req.params.id, req.user.email)
 		.then(function (list) {
 			if (list == null) {
 				var err = new Error();
@@ -58,21 +57,26 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.post('/save', ensureLoggedIn, function (req, res, next) {
-	var list = new List(req.body);
-	list.owner = req.user.email;
-	list.ownerName = req.user.name;
-	list.members = [req.user.email];
-	if (!req.body.id) {
-		list.save()
-			.then(function (list) {
-				logger.info('List created', { listName: list.name });
-				res.redirect('/lists?new=true');
+	var list = {
+		name: req.body.name,
+		type: req.body.type,
+		description: req.body.description,
+		notes: req.body.notes,
+		owner: req.user.email,
+		ownerName: req.user.name
+	};
+	if (req.body.id) {
+		list.id = req.body.id;
+		service.saveList(list)
+			.then(function () {
+				res.redirect('/lists');
 			})
 			.catch(function (err) {
 				return next(err);
 			});
 	} else {
-		List.findOneAndUpdate({ _id: req.body.id }, req.body, { new: false })
+		list.members = [req.user.email];
+		service.createList(list)
 			.then(function () {
 				res.redirect('/lists');
 			})
