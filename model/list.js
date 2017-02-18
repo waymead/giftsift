@@ -19,6 +19,12 @@ const listSchema = new Schema({
 	deleted: { type: Boolean, default: false}
 }, { collection: 'lists' });
 
+listSchema.statics.findByIdAndOwner = function(id, email) {
+	return this.findOne({ _id: id, members: email, deleted: {$ne: true} }, {}, { sort: 'name' })
+		.populate('gifts')
+		.exec();
+};
+
 listSchema.statics.findByOwner = function(email) {
 	return this.find({ owner: email, deleted: {$ne: true} }, {}, { sort: 'name' });
 };
@@ -29,6 +35,14 @@ listSchema.statics.findByMember = function(email) {
 
 listSchema.statics.delete = function(id, email) {
 	return List.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: true }});
+};
+
+listSchema.statics.join = function(id, email) {
+	return List.findOneAndUpdate({ _id: id }, { $addToSet: { members: email } });
+};
+
+listSchema.statics.leave = function(id, email) {
+	return List.findOneAndUpdate({ _id: id }, { $pull: { members: email } });
 };
 
 listSchema.statics.undelete = function(id, email) {

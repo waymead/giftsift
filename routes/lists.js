@@ -117,7 +117,7 @@ router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
-	List.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.user.email } }, { new: false })
+	List.findById(req.params.id)
 		.then(function (list) {
 			res.render('lists/join', { list: list });
 		})
@@ -128,7 +128,7 @@ router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.post('/join', ensureLoggedIn, function (req, res, next) {
-	List.findOneAndUpdate({ _id: req.body.id }, { $addToSet: { members: req.user.email } }, { new: false })
+	service.joinList(req.body.id, req.user.email)
 		.then(function () {
 			res.redirect('/lists/' + req.body.id);
 		})
@@ -139,7 +139,7 @@ router.post('/join', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/leave/:id', ensureLoggedIn, function (req, res, next) {
-	List.findOneAndUpdate({ _id: req.params.id }, { $pull: { members: req.user.email } }, { new: false })
+	service.leaveList(req.params.id, req.user.email)
 		.then(function () {
 			res.redirect('/lists');
 		})
@@ -150,18 +150,18 @@ router.get('/leave/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/:id', ensureLoggedIn, function (req, res, next) {
+	var theList;
 	var groupedGifts;
 	var numGifts;
-	Gift.find({ list: req.params.id })
-		.sort('owner')
-		.exec()
+	service.getList(req.params.id, req.user.email)
+		.then(function (list) {
+			theList = list;
+			return Gift.find({ list: list._id });
+		})
 		.then(function (gifts) {
 			groupedGifts = _.groupBy(gifts, 'ownerName');
 			numGifts = gifts.length;
-			return List.findOne({ _id: req.params.id });
-		})
-		.then(function (list) {
-			res.render('lists/list', { list: list, gifts: groupedGifts, user: req.user, numGifts: numGifts });
+			res.render('lists/list', { list: theList, gifts: groupedGifts, user: req.user, numGifts: numGifts });
 		})
 		.catch(function (err) {
 			logger.error(err);
