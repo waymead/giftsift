@@ -19,10 +19,12 @@ const listSchema = new Schema({
 	deleted: { type: Boolean, default: false}
 }, { collection: 'lists' });
 
+listSchema.statics.findById = function(id) {
+	return this.findOne({ _id: id, deleted: {$ne: true} }, {}, { sort: 'name' });
+};
+
 listSchema.statics.findByIdAndOwner = function(id, email) {
-	return this.findOne({ _id: id, members: email, deleted: {$ne: true} }, {}, { sort: 'name' })
-		.populate('gifts')
-		.exec();
+	return this.findOne({ _id: id, members: email, deleted: {$ne: true} }, {}, { sort: 'name' });
 };
 
 listSchema.statics.findByOwner = function(email) {

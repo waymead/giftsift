@@ -13,7 +13,7 @@ var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/', ensureLoggedIn, function (req, res, next) {
-	List.findByMember(req.user.email)
+	service.getListsByMember(req.user.email)
 		.then(function (lists) {
 			res.render('lists/index', { lists: lists, owner: req.user.email });
 		})
@@ -42,7 +42,7 @@ router.get('/add', ensureLoggedIn, function (req, res) {
 });
 
 router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
-	service.getList(req.params.id, req.user.email)
+	service.getListByIdAndOwner(req.params.id, req.user.email)
 		.then(function (list) {
 			if (list == null) {
 				var err = new Error();
@@ -90,7 +90,7 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
-	List.delete(req.params.id, req.user.email)
+	service.deleteList(req.params.id, req.user.email)
 //	List.findOneAndUpdate({ _id: req.params.id, owner: req.user.email }, { $set: {deleted: true }})
 //		.exec()
 		/*.then(function (list) {
@@ -106,7 +106,7 @@ router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
-	service.getList(req.params.id, req.user.email)
+	service.getListByIdAndOwner(req.params.id, req.user.email)
 		.then(function (list) {
 			res.render('lists/share', { list: list, owner: req.user.email, listLink: process.env.LISTLINK_DOMAIN });
 		})
@@ -117,7 +117,7 @@ router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
-	List.findById(req.params.id)
+	service.findById(req.params.id)
 		.then(function (list) {
 			res.render('lists/join', { list: list });
 		})
@@ -153,7 +153,7 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 	var theList;
 	var groupedGifts;
 	var numGifts;
-	service.getList(req.params.id, req.user.email)
+	service.getListByIdAndOwner(req.params.id, req.user.email)
 		.then(function (list) {
 			theList = list;
 			return Gift.find({ list: list._id });
