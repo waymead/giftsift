@@ -1,26 +1,17 @@
 'use strict';
-var logger = require('../lib/logging.js');
-var List = require('../model/aiwf.js').List;
-var Gift = require('../model/aiwf.js').Gift;
+const logger = require('../lib/logging.js');
+const service = require('../lib/giftsiftService.js');
+
+var List = require('../model').List;
+var Gift = require('../model').Gift;
 
 var express = require('express');
 var router = express.Router();
 
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
-router.get('/manage', ensureLoggedIn, function (req, res, next) {
-	Gift.find({ owner: req.user.email }, {}, { sort: 'name' })
-		.populate('list')
-		.then(function (gifts) {
-			res.render('gifts/manage', { gifts: gifts });
-		})
-		.catch(function (err) {
-			return next(err);
-		});
-});
-
 router.get('/add', ensureLoggedIn, function (req, res, next) {
-	List.find({ members: req.user.email }, {}, { sort: 'name' })
+	List.findByMember(req.user.email)
 		.then(function (lists) {
 			res.render('gifts/edit', { lists: lists, owner: req.user.email });
 		})
@@ -31,9 +22,7 @@ router.get('/add', ensureLoggedIn, function (req, res, next) {
 
 router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 	var theGift;
-	Gift.findOne({ _id: req.params.id, owner: req.user.email })
-		.populate('list', 'name', null, { sort: 'name' })
-		.exec()
+	Gift.findByIdAndOwner(req.params.id, req.user.email)
 		.then(function (gift) {
 			if (gift == null) {
 				var err = new Error();
@@ -41,7 +30,7 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 				throw err;
 			}
 			theGift = gift;
-			return List.find({ members: req.user.email });
+			return List.findByMember(req.user.email);
 		})
 		.then(function (lists) {
 			res.render('gifts/edit', { gift: theGift, lists: lists, owner: req.user.email });

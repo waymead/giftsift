@@ -1,11 +1,11 @@
 'use strict';
-var _ = require('underscore');
+const _ = require('underscore');
 
-var logger = require('../lib/logging.js');
+const logger = require('../lib/logging.js');
 const service = require('../lib/giftsiftService.js');
 
-var List = require('../model/aiwf.js').List;
-var Gift = require('../model/aiwf.js').Gift;
+var List = require('../model').List;
+var Gift = require('../model').Gift;
 
 var express = require('express');
 var router = express.Router();
@@ -13,7 +13,7 @@ var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/', ensureLoggedIn, function (req, res, next) {
-	service.getLists(req.user.email)
+	List.findByMember(req.user.email)
 		.then(function (lists) {
 			res.render('lists/index', { lists: lists, owner: req.user.email });
 		})
@@ -90,11 +90,12 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
-	List.findOneAndRemove({ _id: req.params.id, owner: req.user.email })
-		.exec()
-		.then(function (list) {
+	List.delete(req.params.id, req.user.email)
+//	List.findOneAndUpdate({ _id: req.params.id, owner: req.user.email }, { $set: {deleted: true }})
+//		.exec()
+		/*.then(function (list) {
 			return Gift.find({ list: list.id }).remove();
-		})
+		})*/
 		.then(function () {
 			res.redirect('/lists');
 		})
