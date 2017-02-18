@@ -106,8 +106,7 @@ router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
-	List.findOne({ _id: req.params.id, owner: req.user.email })
-		.exec()
+	service.getList(req.params.id, req.user.email)
 		.then(function (list) {
 			res.render('lists/share', { list: list, owner: req.user.email, listLink: process.env.LISTLINK_DOMAIN });
 		})
