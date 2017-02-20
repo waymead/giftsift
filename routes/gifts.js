@@ -91,10 +91,10 @@ router.get('/undelete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 		});
 });
 
-router.get('/buy/:id/:list', ensureLoggedIn, function (req, res, next) {
+router.get('/buy/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	service.buyGift(req.params.id, req.user.email)
 		.then(function () {
-			res.redirect('/lists/' + req.params.list);
+			res.redirect('/lists/' + req.params.listId);
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -102,10 +102,10 @@ router.get('/buy/:id/:list', ensureLoggedIn, function (req, res, next) {
 		});
 });
 
-router.get('/replace/:id/:list', ensureLoggedIn, function (req, res, next) {
+router.get('/replace/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	service.replaceGift(req.params.id, req.user.email)
 		.then(function () {
-			res.redirect('/lists/' + req.params.list);
+			res.redirect('/lists/' + req.params.listId);
 		})
 		.catch(function (err) {
 			logger.error(err);
