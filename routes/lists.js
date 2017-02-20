@@ -4,9 +4,6 @@ const _ = require('underscore');
 const logger = require('../lib/logging.js');
 const service = require('../lib/giftsiftService.js');
 
-var List = require('../model').List;
-var Gift = require('../model').Gift;
-
 var express = require('express');
 var router = express.Router();
 
@@ -63,6 +60,7 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 		type: req.body.type,
 		description: req.body.description,
 		notes: req.body.notes,
+		list: req.body.list,
 		owner: req.user.email,
 		ownerName: req.user.name
 	};
@@ -156,7 +154,7 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 	service.getListByIdAndOwner(req.params.id, req.user.email)
 		.then(function (list) {
 			theList = list;
-			return Gift.find({ list: list._id });
+			return service.getGiftsByListId(list.id);
 		})
 		.then(function (gifts) {
 			groupedGifts = _.groupBy(gifts, 'ownerName');

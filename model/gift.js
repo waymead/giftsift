@@ -26,17 +26,29 @@ const giftSchema = new Schema({
 }, { collection: 'gifts' });
 
 giftSchema.statics.findByIdAndOwner = function(id, email) {
-	return this.findOne({ _id: id, owner: email})
+	return this.findOne({ _id: id, owner: email })
 		.populate('list', 'name', null, { sort: 'name' })
 		.exec();
 };
 
+giftSchema.statics.findByListId = function(id) {
+	return this.find({ list: id, deleted: { $ne: true} });
+};
+
 giftSchema.statics.delete = function(id, email) {
-	return Gift.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: true }});
+	return this.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: true }});
 };
 
 giftSchema.statics.undelete = function(id, email) {
-	return Gift.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: false }});
+	return this.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: false }});
+};
+
+giftSchema.statics.buy = function(id, email) {
+	return this.findOneAndUpdate({ _id: id, boughtBy: null }, { $set: {boughtBy: email }});
+};
+
+giftSchema.statics.replace = function(id, email) {
+	return this.findOneAndUpdate({ _id: id, boughtBy: email }, { $unset: {boughtBy: true }});
 };
 
 giftSchema.methods.isOwner = function (email) {

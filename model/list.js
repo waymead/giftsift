@@ -36,19 +36,19 @@ listSchema.statics.findByMember = function(email) {
 };
 
 listSchema.statics.delete = function(id, email) {
-	return List.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: true }});
-};
-
-listSchema.statics.join = function(id, email) {
-	return List.findOneAndUpdate({ _id: id }, { $addToSet: { members: email } });
-};
-
-listSchema.statics.leave = function(id, email) {
-	return List.findOneAndUpdate({ _id: id }, { $pull: { members: email } });
+	return this.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: true }});
 };
 
 listSchema.statics.undelete = function(id, email) {
 	return List.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: false }});
+};
+
+listSchema.statics.join = function(id, email) {
+	return this.findOneAndUpdate({ _id: id }, { $addToSet: { members: email } });
+};
+
+listSchema.statics.leave = function(id, email) {
+	return this.findOneAndUpdate({ _id: id }, { $pull: { members: email } });
 };
 
 listSchema.methods.isOwner = function (email) {
