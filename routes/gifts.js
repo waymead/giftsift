@@ -72,7 +72,7 @@ router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 router.get('/delete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	service.deleteGift(req.params.id, req.user.email)
 		.then(function (gift) {
-			res.redirect('/lists/' + req.params.listId);
+			res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -80,10 +80,10 @@ router.get('/delete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 		});
 });
 
-router.get('/undelete/:id', ensureLoggedIn, function (req, res, next) {
+router.get('/undelete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	service.undeleteGift(req.params.id, req.user.email)
 		.then(function (gift) {
-			res.redirect('/lists/' + gift.list[0]);
+			res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 		})
 		.catch(function (err) {
 			logger.error(err);
