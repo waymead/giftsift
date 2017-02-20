@@ -33,9 +33,9 @@ block main
 											
 									td
 										if gift.owner === user.email								
-											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="/gifts/edit/" + gift.id + "?" + list.id)
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="/gifts/edit/" + gift.id + "/" + list.id)
 												i.material-icons.md-light edit									
-											button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id=gift.id, data-name=gift.name)
+											button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id=gift.id, data-name=gift.name, data-listId=list.id)
 												i.material-icons.md-light delete
 										else
 											if gift.boughtBy === user.email
@@ -51,7 +51,7 @@ block main
 
 
 			.mdl-cell.mdl-cell--12-col
-				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/gifts/add")
+				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/gifts/add/" + list.id)
 					i.material-icons.md-light add
 
 			dialog#delete-dialog.mdl-dialog
@@ -70,10 +70,10 @@ block append script
 		var dialog = document.querySelector('#delete-dialog');
 		$('.delete-button').each(function() {
 			$(this).on('click', function() {
-				deleteList($(this).attr('data-id'), $(this).attr('data-name'));
+				deleteList($(this).attr('data-id'), $(this).attr('data-name'), $(this).attr('data-listId'));
 			});
 		});
-		function deleteList(id, name) {
+		function deleteList(id, name, listId) {
 			var dialog = document.querySelector('#delete-dialog');
 			if (! dialog.showModal) {
 				dialogPolyfill.registerDialog(dialog);
@@ -83,5 +83,5 @@ block append script
 				dialog.close();       
 			});
 			dialog.querySelector('#gift-name').innerText = name;
-			dialog.querySelector('.ok-button').href='/gifts/delete/' + id;
+			dialog.querySelector('.ok-button').href='/gifts/delete/' + id + '/' + listId;
 		}

@@ -20,30 +20,22 @@ block main
 								.mdl-textfield.mdl-js-textfield
 									input.mdl-textfield__input(type="text", id="name", name="name", required, value=list.name)
 									label.mdl-textfield__label(for="name") Name
-								each listType in ['christmas', 'easter', 'wedding', 'birthday']
-									label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType)
-										input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType checked=(list && list.type===listType ? "checked" : undefined))
-										span.mdl-radio__label= listType
+								each listType in [['Christmas', 'christmas'], ['Easter', 'easter'], ['Wedding', 'wedding'], ['Birthday', 'birthday']]
+									label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType[1])
+										input.mdl-radio__button(type="radio", id=listType[1], name="type", required, value=listType[1] checked=(list && list.type===listType[1] ? "checked" : undefined))
+										span.mdl-radio__label= listType[0]
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")= list.notes
 									label.mdl-textfield__label(for="notes") Notes
-								//.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-									label.mdl-textfield__label(for="members") Members
-									select.mdl-textfield__input(type="text", id="members", name="members", multiple, required)
-										if list && list.members
-											each member in list.members
-												option(value="#{member}", selected)= member
-										else
-											option(value="#{owner}", selected)= owner		
 							else
-								input(type="hidden", id="id", name="id", value="")
+								//input(type="hidden", id="id", name="id", value="")
 								.mdl-textfield.mdl-js-textfield
 									input.mdl-textfield__input(type="text", id="name", name="name", required, value="")
 									label.mdl-textfield__label(for="name") Name
-								each listType in ['christmas', 'easter', 'wedding', 'birthday']
-									label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType)
-										input.mdl-radio__button(type="radio", id=listType, name="type", required, value=listType)
-										span.mdl-radio__label= listType
+								each listType in [['Christmas', 'christmas'], ['Easter', 'easter'], ['Wedding', 'wedding'], ['Birthday', 'birthday']]
+									label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=listType[1])
+										input.mdl-radio__button(type="radio", id=listType[1], name="type", required, value=listType[1])
+										span.mdl-radio__label= listType[0]
 								.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
 									textarea.mdl-textfield__input(type="text", id="notes", name="notes", rows="5")
 									label.mdl-textfield__label(for="notes") Notes

@@ -1,9 +1,11 @@
-var url = process.env.MONGO_URL;
+const url = process.env.MONGO_URL;
 
-var logger = require('../lib/logging.js');
-
-var mongoose = require('mongoose');
+const logger = require('../lib/logging.js');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+
+const List = require('./list.js');
+const Gift = require('./gift.js');
 
 mongoose.connect(url, {
 	server: {
@@ -34,3 +36,5 @@ process.on('SIGINT', function() {
 		process.exit(0);
 	});
 });
+
+module.exports = { List: List, Gift: Gift, Mongoose: mongoose };

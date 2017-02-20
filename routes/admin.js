@@ -2,8 +2,8 @@
 var _ = require('underscore');
 
 var logger = require('../lib/logging.js');
-var List = require('../model/aiwf.js').List;
-var Gift = require('../model/aiwf.js').Gift;
+var List = require('../model').List;
+var Gift = require('../model').Gift;
 
 var express = require('express');
 var router = express.Router();
