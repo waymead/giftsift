@@ -6,10 +6,10 @@ const router = express.Router();
 
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
-router.get('/add', ensureLoggedIn, function (req, res, next) {
+router.get('/add/:listId', ensureLoggedIn, function (req, res, next) {
 	service.getListsByMember(req.user.email)
 		.then(function (lists) {
-			res.render('gifts/edit', { lists: lists, owner: req.user.email });
+			res.render('gifts/edit', { lists: lists, listId: req.params.listId, owner: req.user.email });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -60,7 +60,7 @@ router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 	} else {
 		service.createGift(gift)
 			.then(function (gift) {
-				res.redirect('/lists/' + gift.list[0]);
+				res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 			})
 			.catch(function (err) {
 				logger.error(err);
