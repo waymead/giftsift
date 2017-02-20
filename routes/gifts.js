@@ -1,10 +1,10 @@
-'use strict';
+const logger = require('../lib/logging.js');
 const service = require('../lib/giftsiftService.js');
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/add', ensureLoggedIn, function (req, res, next) {
 	service.getListsByMember(req.user.email)
@@ -12,11 +12,12 @@ router.get('/add', ensureLoggedIn, function (req, res, next) {
 			res.render('gifts/edit', { lists: lists, owner: req.user.email });
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
 
-router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
+router.get('/edit/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	var theGift;
 	service.getGiftByIdAndOwner(req.params.id, req.user.email)
 		.then(function (gift) {
@@ -29,14 +30,15 @@ router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
 			return service.getListsByMember(req.user.email);
 		})
 		.then(function (lists) {
-			res.render('gifts/edit', { gift: theGift, lists: lists, owner: req.user.email });
+			res.render('gifts/edit', { gift: theGift, lists: lists, listId: req.params.listId, owner: req.user.email });
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
 
-router.post('/save', ensureLoggedIn, function (req, res, next) {
+router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 	var gift = {
 		name: req.body.name,
 		url: req.body.url,
@@ -49,63 +51,42 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 	if (req.body.id) {
 		gift.id = req.body.id;
 		service.saveGift(gift)
-		/*gift.owner = req.user.email;
-		gift.ownerName = req.user.name;
-		gift.save()*/
-			// .then(function (gift) {
-			// 	logger.info('Gift created', { gift: gift.name });
-			// 	return List.update({ _id: { $in: gift.list } }, { $addToSet: { gifts: gift.id } }, { multi: true, new: false });
-			// })
 			.then(function (gift) {
-				res.redirect('/lists/' + gift.list[0]);
+				res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 			})
 			.catch(function (err) {
 				return next(err);
 			});
 	} else {
 		service.createGift(gift)
-		//Gift.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true })
-			// .then(function (gift) {
-			// 	theGift = gift;
-			// 	return List.update({ _id: { $in: gift.list } }, { $addToSet: { gifts: gift.id } }, { multi: true, new: false });
-			// })
 			.then(function (gift) {
 				res.redirect('/lists/' + gift.list[0]);
 			})
 			.catch(function (err) {
+				logger.error(err);
 				return next(err);
 			});
 	}
 });
 
-router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
-	//var listId;
+router.get('/delete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	service.deleteGift(req.params.id, req.user.email)
-		/*.exec()
 		.then(function (gift) {
-			listId = gift.list[0];
-			return List.update({ _id: { $in: gift.list } }, { $pull: { gifts: gift.id } }, { multi: true, new: false });
-		})*/
-		.then(function (gift) {
-			res.redirect('/lists/' + gift.list[0]);
+			res.redirect('/lists/' + req.params.listId);
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
 
 router.get('/undelete/:id', ensureLoggedIn, function (req, res, next) {
-	//var listId;
 	service.undeleteGift(req.params.id, req.user.email)
-		/*.exec()
-		.then(function (gift) {
-			listId = gift.list[0];
-			return List.update({ _id: { $in: gift.list } }, { $pull: { gifts: gift.id } }, { multi: true, new: false });
-		})*/
 		.then(function (gift) {
 			res.redirect('/lists/' + gift.list[0]);
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -116,6 +97,7 @@ router.get('/buy/:id/:list', ensureLoggedIn, function (req, res, next) {
 			res.redirect('/lists/' + req.params.list);
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });
@@ -126,6 +108,7 @@ router.get('/replace/:id/:list', ensureLoggedIn, function (req, res, next) {
 			res.redirect('/lists/' + req.params.list);
 		})
 		.catch(function (err) {
+			logger.error(err);
 			return next(err);
 		});
 });

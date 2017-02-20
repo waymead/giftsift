@@ -33,7 +33,7 @@ block main
 											
 									td
 										if gift.owner === user.email								
-											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="/gifts/edit/" + gift.id + "?" + list.id)
+											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="/gifts/edit/" + gift.id + "/" + list.id)
 												i.material-icons.md-light edit									
 											button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id=gift.id, data-name=gift.name)
 												i.material-icons.md-light delete

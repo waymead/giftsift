@@ -1,13 +1,11 @@
-'use strict';
-const _ = require('underscore');
-
 const logger = require('../lib/logging.js');
 const service = require('../lib/giftsiftService.js');
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const _ = require('underscore');
 
-var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/', ensureLoggedIn, function (req, res, next) {
 	service.getListsByMember(req.user.email)
@@ -18,21 +16,6 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
 			return next(err);
 		});
 });
-
-/*router.get('/manage', ensureLoggedIn, function (req, res, next) {
-	var ownedLists;
-	List.find({ owner: req.user.email }, {}, { sort: 'name' })
-		.then(function (lists) {
-			ownedLists = lists;
-			return List.find({ members: req.user.email }, {}, { sort: 'name' });
-		})
-		.then(function (lists) {
-			res.render('lists', { ownedLists: ownedLists, memberOfLists: lists, owner: req.user.email });
-		})
-		.catch(function (err) {
-			return next(err);
-		});
-});*/
 
 router.get('/add', ensureLoggedIn, function (req, res) {
 	res.render('lists/edit', { owner: req.user.email });
