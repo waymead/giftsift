@@ -15,7 +15,7 @@ describe('Giftsift Service tests', function () {
 	});
 	describe('getLists()', function () {
 		it('should return an empty list of Lists', function () {
-			return giftsiftService.getLists('unknow.user')
+			return giftsiftService.getListsByMember('unknow.user')
 				.then(function(list) {
 					assert(list != null);
 					assert(list.length == 0);
