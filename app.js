@@ -33,13 +33,19 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(favicon(__dirname + '/public/images/logo.png'));
 app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+	directives: {
+		defaultSrc: ['\'self\''],
+		styleSrc: ['\'self\'', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com', 'fonts.gstatic.com']
+	}
+}));
 
 app.use(session({
 	store: new RedisStore({
 		url: process.env.REDIS_URL
 	}),
 	cookie: {
-		secure: process.env.NODE_ENV == 'production' ? true : false,
+		secure: process.env.NODE_ENV == 'production',
 		httpOnly: true
 	},
 	secret: process.env.REDIS_SESSION_SECRET,
