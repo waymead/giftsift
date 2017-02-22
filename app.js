@@ -37,7 +37,7 @@ app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ['\'self\''],
 		styleSrc: ['\'self\'', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
-		scriptSrc: ['\'self\'', 'cdnjs.cloudflare.com', 'code.getmdl.io'],
+		scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'code.getmdl.io'],
 		fontSrc: ['\'self\'', 'fonts.gstatic.com']
 	}
 }));
