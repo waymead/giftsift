@@ -38,9 +38,12 @@ app.use(session({
 	store: new RedisStore({
 		url: process.env.REDIS_URL
 	}),
+	secure: true,
+	httpOnly: true,
 	secret: process.env.REDIS_SESSION_SECRET,
 	resave: true,
-	saveUninitialized: true
+	saveUninitialized: true,
+	name: 'session.id'
 }));
 app.use(flash());
 
