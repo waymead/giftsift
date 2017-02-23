@@ -1,4 +1,10 @@
 {
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "script",
+        "ecmaFeatures": {
+        }
+    },
     "rules": {
         "indent": [
             2,
