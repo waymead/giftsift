@@ -40,7 +40,7 @@ app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ['\'self\''],
 		styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
-		scriptSrc: ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'', 'cdn.auth0.com.com', 'ajax.cloudflare.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'js-agent.newrelic.com', 'ssl.google-analytics.com', 'bam.nr-data.net'],
+		scriptSrc: ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'', 'cdn.auth0.com', 'ajax.cloudflare.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'js-agent.newrelic.com', 'ssl.google-analytics.com', 'bam.nr-data.net'],
 		fontSrc: ['\'self\'', 'fonts.gstatic.com'],
 		connectSrc: ['api.rollbar.com'],
 		imgSrc: ['*']
