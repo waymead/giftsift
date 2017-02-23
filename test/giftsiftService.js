@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
-const assert = require('assert');
+//const assert = require('assert');
 require('dotenv').config({
 	silent: true,
 	path: '\.env'
 });
 
-const giftsiftService = require('../lib/giftsiftService.js');
+/*const giftsiftService = require('../lib/giftsiftService.js');
 
 describe('Giftsift Service tests', function () {
 	describe('constructor', function () {
@@ -22,4 +22,4 @@ describe('Giftsift Service tests', function () {
 				});
 		});
 	});
-});
+});*/
