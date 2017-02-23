@@ -1,6 +1,3 @@
-'use strict';
-var _ = require('underscore');
-
 var logger = require('../lib/logging.js');
 var List = require('../model').List;
 var Gift = require('../model').Gift;

@@ -25,13 +25,7 @@ var strategy = require('./lib/auth0');
 passport.use(strategy);
 
 var app = express();
-app.use(cookieParser());
-app.use(morgan('combined'));
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
-app.use(bodyParser.json());
-app.use(favicon(__dirname + '/public/images/logo.png'));
+
 app.use(helmet());
 app.use(helmet.referrerPolicy({ 
 	policy: 'unsafe-url'
@@ -39,13 +33,21 @@ app.use(helmet.referrerPolicy({
 app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ['\'self\''],
-		styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
+		styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'code.getmdl.io'],
 		scriptSrc: ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'', 'cdn.eu.auth0.com', 'cdn.auth0.com', 'ajax.cloudflare.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'js-agent.newrelic.com', 'ssl.google-analytics.com', 'bam.nr-data.net'],
 		fontSrc: ['\'self\'', 'fonts.gstatic.com'],
 		connectSrc: ['aiwf.eu.auth0.com', 'api.rollbar.com'],
 		imgSrc: ['*']
 	}
 }));
+
+app.use(cookieParser());
+app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(bodyParser.json());
+app.use(favicon(__dirname + '/public/images/logo.png'));
 
 app.use(session({
 	store: new RedisStore({
