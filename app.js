@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 app.use(favicon(__dirname + '/public/images/logo.png'));
 app.use(helmet());
 app.use(helmet.referrerPolicy({ 
-	policy: 'origin'
+	policy: 'unsafe-url'
 }));
 app.use(helmet.contentSecurityPolicy({
 	directives: {
