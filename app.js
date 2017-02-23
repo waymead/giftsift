@@ -42,7 +42,7 @@ app.use(helmet.contentSecurityPolicy({
 		styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
 		scriptSrc: ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'', 'cdn.eu.auth0.com', 'cdn.auth0.com', 'ajax.cloudflare.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'js-agent.newrelic.com', 'ssl.google-analytics.com', 'bam.nr-data.net'],
 		fontSrc: ['\'self\'', 'fonts.gstatic.com'],
-		connectSrc: ['api.rollbar.com'],
+		connectSrc: ['aiwf.eu.auth0.com', 'api.rollbar.com'],
 		imgSrc: ['*']
 	}
 }));
