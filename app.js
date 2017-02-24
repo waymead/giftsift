@@ -51,8 +51,8 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 
 let cookie = {};
 if (app.get('env') === 'production') {
-	app.set('trust proxy', 1); // trust first proxy
-	cookie.secure = true; // serve secure cookies
+	app.set('trust proxy', 1);
+	cookie.secure = true;
 }
 app.use(session({
 	store: new RedisStore({
@@ -61,6 +61,7 @@ app.use(session({
 	cookie: cookie,
 	secret: process.env.REDIS_SESSION_SECRET,
 	resave: false,
+	sameSite: true,
 	saveUninitialized: true,
 	name: 'session.id'
 }));
