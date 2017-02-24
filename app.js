@@ -27,7 +27,7 @@ passport.use(strategy);
 var app = express();
 
 app.use(helmet());
-app.use(helmet.referrerPolicy({ 
+app.use(helmet.referrerPolicy({
 	policy: 'unsafe-url'
 }));
 app.use(helmet.contentSecurityPolicy({
@@ -49,19 +49,22 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(favicon(__dirname + '/public/images/logo.png'));
 
+let cookie = {};
+if (app.get('env') === 'production') {
+	app.set('trust proxy', 1); // trust first proxy
+	cookie.secure = true; // serve secure cookies
+}
 app.use(session({
 	store: new RedisStore({
 		url: process.env.REDIS_URL
 	}),
-	cookie: {
-		secure: 'auto',
-		httpOnly: true
-	},
+	cookie: cookie,
 	secret: process.env.REDIS_SESSION_SECRET,
 	resave: true,
 	saveUninitialized: true,
 	name: 'session.id'
 }));
+
 app.use(flash());
 
 app.use(passport.initialize());
