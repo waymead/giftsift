@@ -60,7 +60,7 @@ app.use(session({
 	}),
 	cookie: cookie,
 	secret: process.env.REDIS_SESSION_SECRET,
-	resave: true,
+	resave: false,
 	saveUninitialized: true,
 	name: 'session.id'
 }));
