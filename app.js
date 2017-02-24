@@ -53,6 +53,7 @@ let cookie = {};
 if (app.get('env') === 'production') {
 	app.set('trust proxy', 1);
 	cookie.secure = true;
+	cookie.sameSite = true;
 }
 app.use(session({
 	store: new RedisStore({
@@ -61,7 +62,6 @@ app.use(session({
 	cookie: cookie,
 	secret: process.env.REDIS_SESSION_SECRET,
 	resave: false,
-	sameSite: true,
 	saveUninitialized: true,
 	name: 'session.id'
 }));
