@@ -54,7 +54,7 @@ app.use(session({
 		url: process.env.REDIS_URL
 	}),
 	cookie: {
-		secure: process.env.NODE_ENV == 'production',
+		secure: 'auto',
 		httpOnly: true
 	},
 	secret: process.env.REDIS_SESSION_SECRET,
