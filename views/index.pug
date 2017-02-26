@@ -4,7 +4,7 @@ block main
 	#content
 		.mdl-grid
 			.mdl-cell.mdl-cell--12-col
-				h2.mdl-color-text--primary GiftSift
+				h2.mdl-color-text--primary= document.getText('home-page.title')
 				
 			.mdl-cell.mdl-cell--12-col
 				.mdl-card.mdl-shadow--4dp.card-wide
@@ -13,8 +13,6 @@ block main
 					//.mdl-card__media
 						p pic
 					.mdl-card__supporting-text
-						p Always getting presents you don't want?
-						p Never getting the gifts you do want?
-						p Share lists and gift ideas with family and friends.
+						div!= document.getHtml('home-page.body')
 					.mdl-card__actions
 						a.mdl-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--primary(href="/login") Login

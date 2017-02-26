@@ -1,13 +1,21 @@
-'use strict';
+const logger = require('../lib/logging.js');
+const express = require('express');
+const router = express.Router();
 
-var express = require('express');
-var router = express.Router();
-
-router.get('/', function (req, res) {
+router.get('/', function (req, res, next) {
 	if (req.user) {
 		res.redirect('/lists');
 	} else {
-		res.render('index', { error: req.flash('error') });
+		req.prismic.api.getSingle('home-page')
+		.then(function (document) {
+			res.render('index', {
+				document: document,
+				error: req.flash('error')
+			});
+		}, function (err) {
+			logger.error(err);
+			return next(err);
+		});
 	}
 });
 
