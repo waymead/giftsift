@@ -30,7 +30,7 @@ app.use(helmet());
 app.use(helmet.referrerPolicy({
 	policy: 'unsafe-url'
 }));
-app.use(helmet.contentSecurityPolicy({
+/*app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ['\'self\''],
 		styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
@@ -39,7 +39,7 @@ app.use(helmet.contentSecurityPolicy({
 		connectSrc: ['aiwf.eu.auth0.com', 'api.rollbar.com'],
 		imgSrc: ['*']
 	}
-}));
+}));*/
 
 app.use(cookieParser());
 app.use(morgan('combined'));
