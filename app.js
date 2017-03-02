@@ -22,7 +22,7 @@ var strategy = require('./lib/auth0');
 
 passport.use(strategy);
 
-const prismic = require('prismic-nodejs');
+const prismic = require('./lib/prismic');
 
 var app = express();
 
@@ -71,24 +71,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-	prismic.api(process.env.PRISMIC_API_URL, {accessToken: process.env.PRISMIC_API_TOKEN, req}) 
-		.then(api => {
-			req.prismic = {
-				api
-			};
-			res.locals.ctx = {
-				endpoint: process.env.PRISMIC_API_URL
-			};
-			next();
-		}).catch(err => {
-			if (err.status === 404) {
-				res.status(404).send('There was a problem connecting to your API, please check your configuration file for errors.');
-			} else {
-				res.status(500).send('Error 500: ' + err.message);
-			}
-		});
-});
+app.use(prismic);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
