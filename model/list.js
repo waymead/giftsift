@@ -62,7 +62,7 @@ listSchema.statics.join = function(id, user) {
 };
 
 listSchema.statics.leave = function(id, user) {
-	return this.findOneAndUpdate({ _id: id }, { $pull: { members: user } });
+	return this.findOneAndUpdate({ _id: id }, { $pull: { members: user._id } });
 };
 
 listSchema.methods.isOwner = function (user) {

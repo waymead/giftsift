@@ -38,4 +38,4 @@ process.on('SIGINT', function() {
 	});
 });
 
-module.exports = { User: User, List: List, Gift: Gift, Mongoose: mongoose };
+module.exports = { User: User, List: List, Gift: Gift, mongoose: mongoose };
