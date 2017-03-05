@@ -46,9 +46,22 @@ a {
 	background: url('/images/small-bg.jpg') center / cover;
 }
 
-.mdl-layout__drawer {
-	background: #881e07;
-	background: linear-gradient(135deg, #881e07 1%, #b24d0a 100%);
+.mdl-layout__drawer header {
+	background: url(/images/small-bg.jpg) center;
+	height: 120px;
+	padding: 16px;
+}
+
+.mdl-layout__drawer header img {
+	display: inline-block;
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+	padding: 0.5rem;
+}
+
+.mdl-layout__drawer .mdl-layout__title {
+	margin-bottom: 3.4rem;
 }
 
 .mdl-grid {
