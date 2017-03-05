@@ -1,5 +1,6 @@
 const logger = require('../lib/logging.js');
 //const service = require('../lib/giftsiftService.js');
+const mongoose = require('../model').mongoose;
 const List = require('../model').List;
 const Gift = require('../model').Gift;
 
@@ -60,7 +61,7 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 			});
 	} else {
 		list.members = [req.user];
-		newList = new List(list);
+		let newList = new List(list);
 		newList.id = new mongoose.Types.ObjectId;
 		newList.save()
 			.then(function () {
@@ -75,11 +76,6 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 
 router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
 	List.delete(req.params.id, req.user)
-		//	List.findOneAndUpdate({ _id: req.params.id, owner: req.user }, { $set: {deleted: true }})
-		//		.exec()
-		/*.then(function (list) {
-			return Gift.find({ list: list.id }).remove();
-		})*/
 		.then(function () {
 			res.redirect('/lists');
 		})
@@ -135,7 +131,6 @@ router.get('/leave/:id', ensureLoggedIn, function (req, res, next) {
 
 router.get('/:id', ensureLoggedIn, function (req, res, next) {
 	var theList;
-	var groupedGifts;
 	var numGifts;
 	List.findByIdAndMember(req.params.id, req.user)
 		.then(function (list) {
@@ -143,7 +138,8 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 			return Gift.findByListId(list.id);
 		})
 		.then(function (gifts) {
-			groupedGifts = _.groupBy(gifts, 'owner');
+			let sortedGifts = _.sortBy(gifts, function (gift) { return gift.owner.displayName; });
+			let groupedGifts = _.groupBy(sortedGifts, function (gift) { return gift.owner.displayName; });
 			numGifts = gifts.length;
 			res.render('lists/list', { list: theList, gifts: groupedGifts, user: req.user, numGifts: numGifts });
 		})

@@ -1,5 +1,6 @@
 const logger = require('../lib/logging.js');
 //const service = require('../lib/giftsiftService.js');
+const mongoose = require('../model').mongoose;
 const List = require('../model').List;
 const Gift = require('../model').Gift;
 
@@ -59,7 +60,7 @@ router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 				return next(err);
 			});
 	} else {
-		newGift = new Gift(gift);
+		let newGift = new Gift(gift);
 		newGift.id = new mongoose.Types.ObjectId;
 		newGift.save()
 			.then(function (gift) {

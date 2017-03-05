@@ -37,7 +37,7 @@ giftSchema.statics.findByIdAndOwner = function(id, user) {
 
 giftSchema.statics.findByListId = function(id) {
 	return this.find({ lists: id, deleted: { $ne: true } })
-		.populate('owner');
+		.populate('owner', 'displayName', null, { sort: 'displayName' });
 };
 
 giftSchema.statics.delete = function(id, user) {
