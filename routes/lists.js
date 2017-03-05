@@ -1,5 +1,7 @@
 const logger = require('../lib/logging.js');
-const service = require('../lib/giftsiftService.js');
+//const service = require('../lib/giftsiftService.js');
+const List = require('../model').List;
+const Gift = require('../model').Gift;
 
 const express = require('express');
 const router = express.Router();
@@ -8,9 +10,9 @@ const _ = require('underscore');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/', ensureLoggedIn, function (req, res, next) {
-	service.getListsByMember(req.user.email)
+	List.findByMember(req.user)
 		.then(function (lists) {
-			res.render('lists/index', { lists: lists, owner: req.user.email });
+			res.render('lists/index', { lists: lists });
 		})
 		.catch(function (err) {
 			return next(err);
@@ -18,18 +20,18 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/add', ensureLoggedIn, function (req, res) {
-	res.render('lists/edit', { owner: req.user.email });
+	res.render('lists/edit', { owner: req.user });
 });
 
 router.get('/edit/:id', ensureLoggedIn, function (req, res, next) {
-	service.getListByIdAndOwner(req.params.id, req.user.email)
+	List.findByIdAndOwner(req.params.id, req.user)
 		.then(function (list) {
 			if (list == null) {
 				var err = new Error();
 				err.status = 404;
 				throw err;
 			}
-			res.render('lists/edit', { list: list, owner: req.user.email });
+			res.render('lists/edit', { list: list, owner: req.user });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -44,12 +46,11 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 		description: req.body.description,
 		notes: req.body.notes,
 		list: req.body.list,
-		owner: req.user.email,
-		ownerName: req.user.name
+		owner: req.user
 	};
 	if (req.body.id) {
 		list.id = req.body.id;
-		service.saveList(list)
+		List.findOneAndUpdate({ _id: list.id }, list, { new: true })
 			.then(function () {
 				res.redirect('/lists');
 			})
@@ -58,8 +59,10 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 				return next(err);
 			});
 	} else {
-		list.members = [req.user.email];
-		service.createList(list)
+		list.members = [req.user];
+		newList = new List(list);
+		newList.id = new mongoose.Types.ObjectId;
+		newList.save()
 			.then(function () {
 				res.redirect('/lists');
 			})
@@ -71,9 +74,9 @@ router.post('/save', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
-	service.deleteList(req.params.id, req.user.email)
-//	List.findOneAndUpdate({ _id: req.params.id, owner: req.user.email }, { $set: {deleted: true }})
-//		.exec()
+	List.delete(req.params.id, req.user)
+		//	List.findOneAndUpdate({ _id: req.params.id, owner: req.user }, { $set: {deleted: true }})
+		//		.exec()
 		/*.then(function (list) {
 			return Gift.find({ list: list.id }).remove();
 		})*/
@@ -87,9 +90,9 @@ router.get('/delete/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
-	service.getListByIdAndOwner(req.params.id, req.user.email)
+	List.findByIdAndOwner(req.params.id, req.user)
 		.then(function (list) {
-			res.render('lists/share', { list: list, owner: req.user.email, listLink: process.env.LISTLINK_DOMAIN });
+			res.render('lists/share', { list: list, owner: req.user, listLink: process.env.LISTLINK_DOMAIN });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -98,7 +101,7 @@ router.get('/share/:id/:name?', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
-	service.findById(req.params.id)
+	List.findById(req.params.id)
 		.then(function (list) {
 			res.render('lists/join', { list: list });
 		})
@@ -109,7 +112,7 @@ router.get('/join/:id', ensureLoggedIn, function (req, res, next) {
 });
 
 router.post('/join', ensureLoggedIn, function (req, res, next) {
-	service.joinList(req.body.id, req.user.email)
+	List.join(req.body.id, req.user)
 		.then(function () {
 			res.redirect('/lists/' + req.body.id);
 		})
@@ -120,7 +123,7 @@ router.post('/join', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/leave/:id', ensureLoggedIn, function (req, res, next) {
-	service.leaveList(req.params.id, req.user.email)
+	List.leave(req.params.id, req.user)
 		.then(function () {
 			res.redirect('/lists');
 		})
@@ -134,13 +137,13 @@ router.get('/:id', ensureLoggedIn, function (req, res, next) {
 	var theList;
 	var groupedGifts;
 	var numGifts;
-	service.getListByIdAndOwner(req.params.id, req.user.email)
+	List.findByIdAndMember(req.params.id, req.user)
 		.then(function (list) {
 			theList = list;
-			return service.getGiftsByListId(list.id);
+			return Gift.findByListId(list.id);
 		})
 		.then(function (gifts) {
-			groupedGifts = _.groupBy(gifts, 'ownerName');
+			groupedGifts = _.groupBy(gifts, 'owner');
 			numGifts = gifts.length;
 			res.render('lists/list', { list: theList, gifts: groupedGifts, user: req.user, numGifts: numGifts });
 		})

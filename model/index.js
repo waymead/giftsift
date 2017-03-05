@@ -4,6 +4,7 @@ const logger = require('../lib/logging.js');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
+const User = require('./user.js');
 const List = require('./list.js');
 const Gift = require('./gift.js');
 
@@ -37,4 +38,4 @@ process.on('SIGINT', function() {
 	});
 });
 
-module.exports = { List: List, Gift: Gift, Mongoose: mongoose };
+module.exports = { User: User, List: List, Gift: Gift, Mongoose: mongoose };

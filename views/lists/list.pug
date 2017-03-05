@@ -32,17 +32,17 @@ block main
 											span.mdl-layout--large-screen-only &nbsp;(#{gift.notes})
 											
 									td
-										if gift.owner === user.email								
+										if gift.isOwner(user)
 											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="/gifts/edit/" + gift.id + "/" + list.id)
 												i.material-icons.md-light edit									
 											button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id=gift.id, data-name=gift.name, data-listId=list.id)
 												i.material-icons.md-light delete
 										else
-											if gift.boughtBy === user.email
+											if gift.isBoughtBy(user)
 												a.mdl-button.mdl-js-button.mdl-button--accent.mdl-layout--large-screen-only Bought
 												a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray(href="/gifts/replace/" + gift.id + "/" + list.id)
 													i.material-icons.md-light remove_shopping_cart
-											else if typeof(gift.boughtBy) == 'undefined'
+											else if !gift.isBought()
 												a.mdl-button.mdl-js-button.mdl-button--primary.mdl-layout--large-screen-only Available
 												a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-color-text--white(href="/gifts/buy/" + gift.id + "/" + list.id)
 													i.material-icons.md-light add_shopping_cart

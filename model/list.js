@@ -13,50 +13,64 @@ const listSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Gift'
 	}],
-	members: [String],
-	owner: String,
-	ownerName: String,
-	deleted: { type: Boolean, default: false}
+	members: [{
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	}],
+	owner: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	},
+	deleted: {
+		type: Boolean,
+		default: false
+	}
 }, { collection: 'lists' });
 
 listSchema.statics.findById = function(id) {
 	return this.findOne({ _id: id, deleted: {$ne: true} }, {}, { sort: 'name' });
 };
 
-listSchema.statics.findByIdAndOwner = function(id, email) {
-	return this.findOne({ _id: id, members: email, deleted: {$ne: true} }, {}, { sort: 'name' });
+listSchema.statics.findByIdAndOwner = function(id, user) {
+	return this.findOne({ _id: id, owner: user, deleted: { $ne: true } }, {}, { sort: 'name' })
+		.populate('owner', 'members');
 };
 
-listSchema.statics.findByOwner = function(email) {
-	return this.find({ owner: email, deleted: {$ne: true} }, {}, { sort: 'name' });
+listSchema.statics.findByIdAndMember = function(id, user) {
+	return this.findOne({ _id: id, members: user, deleted: { $ne: true } }, {}, { sort: 'name' })
+		.populate('owner', 'members');
 };
 
-listSchema.statics.findByMember = function(email) {
-	return this.find({ members: email, deleted: {$ne: true} }, {}, { sort: 'name' });
+listSchema.statics.findByOwner = function(user) {
+	return this.find({ owner: user, deleted: {$ne: true} }, {}, { sort: 'name' });
 };
 
-listSchema.statics.delete = function(id, email) {
-	return this.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: true }});
+listSchema.statics.findByMember = function(user) {
+	return this.find({ members: user, deleted: {$ne: true} }, {}, { sort: 'name' });
 };
 
-listSchema.statics.undelete = function(id, email) {
-	return List.findOneAndUpdate({ _id: id, owner: email }, { $set: {deleted: false }});
+listSchema.statics.delete = function(id, user) {
+	return this.findOneAndUpdate({ _id: id, owner: user }, { $set: {deleted: true }});
 };
 
-listSchema.statics.join = function(id, email) {
-	return this.findOneAndUpdate({ _id: id }, { $addToSet: { members: email } });
+listSchema.statics.undelete = function(id, user) {
+	return List.findOneAndUpdate({ _id: id, owner: user }, { $set: {deleted: false }});
 };
 
-listSchema.statics.leave = function(id, email) {
-	return this.findOneAndUpdate({ _id: id }, { $pull: { members: email } });
+listSchema.statics.join = function(id, user) {
+	return this.findOneAndUpdate({ _id: id }, { $addToSet: { members: user } });
 };
 
-listSchema.methods.isOwner = function (email) {
-	return this.owner == email;
+listSchema.statics.leave = function(id, user) {
+	return this.findOneAndUpdate({ _id: id }, { $pull: { members: user } });
 };
 
-listSchema.methods.isMember = function (email) {
-	return this.members.indexOf(email) > -1;
+listSchema.methods.isOwner = function (user) {
+	return this.owner.equals(user._id);
+};
+
+listSchema.methods.isMember = function (user) {
+	return this.members.indexOf(user) > -1;
 };
 
 const List = mongoose.model('List', listSchema);

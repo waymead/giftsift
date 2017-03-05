@@ -1,5 +1,7 @@
 const logger = require('../lib/logging.js');
-const service = require('../lib/giftsiftService.js');
+//const service = require('../lib/giftsiftService.js');
+const List = require('../model').List;
+const Gift = require('../model').Gift;
 
 const express = require('express');
 const router = express.Router();
@@ -7,9 +9,9 @@ const router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 router.get('/add/:listId', ensureLoggedIn, function (req, res, next) {
-	service.getListsByMember(req.user.email)
+	List.findByMember(req.user)
 		.then(function (lists) {
-			res.render('gifts/edit', { lists: lists, listId: req.params.listId, owner: req.user.email });
+			res.render('gifts/edit', { lists: lists, listId: req.params.listId, owner: req.user });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -19,7 +21,7 @@ router.get('/add/:listId', ensureLoggedIn, function (req, res, next) {
 
 router.get('/edit/:id/:listId', ensureLoggedIn, function (req, res, next) {
 	var theGift;
-	service.getGiftByIdAndOwner(req.params.id, req.user.email)
+	Gift.findByIdAndOwner(req.params.id, req.user)
 		.then(function (gift) {
 			if (gift == null) {
 				var err = new Error();
@@ -27,10 +29,10 @@ router.get('/edit/:id/:listId', ensureLoggedIn, function (req, res, next) {
 				throw err;
 			}
 			theGift = gift;
-			return service.getListsByMember(req.user.email);
+			return List.findByMember(req.user);
 		})
 		.then(function (lists) {
-			res.render('gifts/edit', { gift: theGift, lists: lists, listId: req.params.listId, owner: req.user.email });
+			res.render('gifts/edit', { gift: theGift, lists: lists, listId: req.params.listId, owner: req.user });
 		})
 		.catch(function (err) {
 			logger.error(err);
@@ -44,13 +46,12 @@ router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 		url: req.body.url,
 		image: req.body.image,
 		type: req.body.type,
-		list: req.body.list,
-		owner: req.user.email,
-		ownerName: req.user.name
+		lists: req.body.lists,
+		owner: req.user
 	};
 	if (req.body.id) {
 		gift.id = req.body.id;
-		service.saveGift(gift)
+		Gift.findOneAndUpdate({ _id: gift.id}, gift, { new: true })
 			.then(function (gift) {
 				res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 			})
@@ -58,7 +59,9 @@ router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 				return next(err);
 			});
 	} else {
-		service.createGift(gift)
+		newGift = new Gift(gift);
+		newGift.id = new mongoose.Types.ObjectId;
+		newGift.save()
 			.then(function (gift) {
 				res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 			})
@@ -70,7 +73,7 @@ router.post('/save/:listId', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/delete/:id/:listId', ensureLoggedIn, function (req, res, next) {
-	service.deleteGift(req.params.id, req.user.email)
+	Gift.delete(req.params.id, req.user)
 		.then(function (gift) {
 			res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 		})
@@ -81,7 +84,7 @@ router.get('/delete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/undelete/:id/:listId', ensureLoggedIn, function (req, res, next) {
-	service.undeleteGift(req.params.id, req.user.email)
+	Gift.undelete(req.params.id, req.user)
 		.then(function (gift) {
 			res.redirect('/lists/' + req.params.listId + '#' + gift.name);
 		})
@@ -92,7 +95,7 @@ router.get('/undelete/:id/:listId', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/buy/:id/:listId', ensureLoggedIn, function (req, res, next) {
-	service.buyGift(req.params.id, req.user.email)
+	Gift.buy(req.params.id, req.user)
 		.then(function () {
 			res.redirect('/lists/' + req.params.listId);
 		})
@@ -103,7 +106,7 @@ router.get('/buy/:id/:listId', ensureLoggedIn, function (req, res, next) {
 });
 
 router.get('/replace/:id/:listId', ensureLoggedIn, function (req, res, next) {
-	service.replaceGift(req.params.id, req.user.email)
+	Gift.replace(req.params.id, req.user)
 		.then(function () {
 			res.redirect('/lists/' + req.params.listId);
 		})

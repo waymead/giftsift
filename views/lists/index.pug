@@ -32,29 +32,29 @@ block main
 									td
 										//a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.delete-button.mdl-layout--large-screen-only(href="/lists/" + list.id + "#" + list.name)
 											i.material-icons.md-light keyboard_arrow_right
-										if list.isOwner(owner)								
+										if list.isOwner(user)								
 											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-layout--large-screen-only(href="/lists/share/" + list.id + "#" + list.name)
 												i.material-icons.md-light share									
 											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.mdl-layout--large-screen-only(href="/lists/edit/" + list.id + "#" + list.name)
 												i.material-icons.md-light edit									
 											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button.mdl-layout--large-screen-only(data-id=list.id, data-name=list.name)
 												i.material-icons.md-light delete
-										if !list.isOwner(owner)									
+										if !list.isOwner(user)
 											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary.leave-button.mdl-layout--large-screen-only(data-id=list.id, data-name=list.name)
-												i.material-icons.md-light redo									
+												i.material-icons.md-light redo
 										button.mdl-layout--small-screen-only.mdl-button.mdl-js-button.mdl-button--icon(id="list" + list.id)
 											i.material-icons more_vert
 										ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for="list" + list.id)
 											//li.mdl-menu__item
 												a.mdl-color-text--primary(href="lists/" + list.id) View
-											if list.isOwner(owner)								
+											if list.isOwner(user)
 												li.mdl-menu__item
 													a.mdl-color-text--primary(href="lists/share/" + list.id) Share
 												li.mdl-menu__item
 													a.mdl-color-text--primary(href="lists/edit/" + list.id) Edit
 												li.mdl-menu__item
 													a.mdl-color-text--primary.delete-button(data-id=list.id, data-name=list.name) Delete
-											if !list.isOwner(owner)	
+											if !list.isOwner(user)
 												li.mdl-menu__item
 													a.mdl-color-text--primary.leave-button(href="lists/leave/" + list.id) Leave
 				.mdl-cell.mdl-cell--12-col
