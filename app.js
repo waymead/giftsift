@@ -18,7 +18,7 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
 var passport = require('passport');
-var strategy = require('./lib/auth0');
+var strategy = require('./lib/auth0-strategy');
 
 passport.use(strategy);
 
