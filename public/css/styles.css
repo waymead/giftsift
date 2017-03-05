@@ -64,6 +64,10 @@ a {
 	margin-bottom: 3.4rem;
 }
 
+.mdl-navigation__link .material-icons {
+	margin-right: 10px;
+}
+
 .mdl-grid {
 	justify-content: center;
 	max-width: 960px;

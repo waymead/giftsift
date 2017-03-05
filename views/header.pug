@@ -21,10 +21,18 @@ block header
 				img(src=user.picture)
 				span= user.displayName
 		nav.mdl-navigation
-			a.mdl-navigation__link(href="/") Home
+			a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/")
+				i.material-icons home
+				span Home
 			if user && user.roles && user.roles.indexOf('admin') >= 0
-				a.mdl-navigation__link(href="/admin") Admin
+				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/admin") 
+					i.material-icons dashboard
+					span Admin
 			if !user
-				a.mdl-navigation__link(href="/login") Login
+				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/login") 
+					i.material-icons power_settings_new
+					span Login
 			if user
-				a.mdl-navigation__link(href="/logout") Logout
+				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/logout") 
+					i.material-icons power_settings_new
+					span Logout
