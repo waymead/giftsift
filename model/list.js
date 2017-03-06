@@ -10,7 +10,7 @@ const listSchema = new Schema({
 		default: Date.now()
 	},
 	gifts: [{
-		type: mongoose.Schema.Types.ObjectId,
+		type: Schema.Types.ObjectId,
 		ref: 'Gift'
 	}],
 	members: [{
