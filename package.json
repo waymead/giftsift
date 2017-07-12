@@ -12,8 +12,7 @@
         "url": "https://github.com/waymead/giftsift.git"
     },
     "scripts": {
-        "start": "node app.js",
-        "test": "snyk test && mocha test/*"
+        "start": "node app.js"
     },
     "author": "Digby Knight",
     "license": "MIT",
