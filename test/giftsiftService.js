@@ -1,8 +1,8 @@
 /* eslint-env node, mocha */
 //const assert = require('assert');
 require('dotenv').config({
-	silent: true,
-	path: '\.env'
+  silent: true,
+  path: '\.env'
 });
 
 /*const giftsiftService = require('../lib/giftsiftService.js');
@@ -23,4 +23,3 @@ describe('Giftsift Service tests', function () {
 		});
 	});
 });*/
-

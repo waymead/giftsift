@@ -2,14 +2,9 @@
     "parserOptions": {
         "ecmaVersion": 8,
         "sourceType": "script",
-        "ecmaFeatures": {
-        }
+        "ecmaFeatures": {}
     },
     "rules": {
-        "indent": [
-            2,
-            "tab"
-         ],
         "quotes": [
             2,
             "single"
