@@ -4,7 +4,7 @@
     "description": "GiftSift",
     "main": "app.js",
     "engines": {
-        "node": ">= 6.0.0",
+        "node": ">= 8.1.4",
         "npm": ">= 3.7.2"
     },
     "repository": {
