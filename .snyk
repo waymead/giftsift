@@ -1,3 +1,5 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:ms:20151024':
     - node-rest-client > debug > ms:
@@ -15,5 +17,9 @@ ignore:
     - auth0 > rest-facade > superagent > qs:
         reason: None given
         expires: '2017-04-16T09:04:45.840Z'
-patch: {}
-version: v1.5.2
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - node-rest-client > debug:
+        patched: '2017-10-03T03:47:15.039Z'
+version: v1.7.1
