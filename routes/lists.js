@@ -4,7 +4,6 @@ const List = require('../model').List;
 const Gift = require('../model').Gift;
 const _ = require('underscore');
 const Router = require('koa-router');
-
 const router = new Router({
 	prefix: '/lists'
 });
@@ -20,9 +19,9 @@ router.get('/', async (ctx, next) => {
 	try {
 		const lists = await List.findByMember(ctx.state.user);
 		return ctx.render('lists/index', { lists: lists });
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -37,9 +36,9 @@ router.get('/edit/:id', async (ctx, next) => {
 			list: list,
 			owner: ctx.state.user
 		});
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -57,9 +56,9 @@ router.post('/save', async (ctx, next) => {
 		try {
 			await List.findOneAndUpdate({ _id: list.id }, list, { new: true });
 			return ctx.redirect('/lists');
-		} catch (err) {
-			logger.error(err);
-			return next(err);
+		} catch (error) {
+			logger.error(error);
+			return next(error);
 		}
 	} else {
 		try {
@@ -68,9 +67,9 @@ router.post('/save', async (ctx, next) => {
 			newList.id = new mongoose.Types.ObjectId();
 			await newList.save();
 			return ctx.redirect('/lists');
-		} catch (err) {
-			logger.error(err);
-			return next(err);
+		} catch (error) {
+			logger.error(error);
+			return next(error);
 		}
 	}
 });
@@ -79,9 +78,9 @@ router.get('/delete/:id', async (ctx, next) => {
 	try {
 		await List.delete(ctx.params.id, ctx.state.user);
 		return ctx.redirect('/lists');
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -93,9 +92,9 @@ router.get('/share/:id/:name?', async (ctx, next) => {
 			owner: ctx.state.user,
 			listLink: process.env.LISTLINK_DOMAIN
 		});
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -105,9 +104,9 @@ router.get('/join/:id', async (ctx, next) => {
 		return ctx.render('lists/join', {
 			list: list
 		});
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -115,9 +114,9 @@ router.post('/join', async (ctx, next) => {
 	try {
 		await List.join(ctx.request.body.id, ctx.state.user);
 		return ctx.redirect('/lists/' + ctx.request.body.id);
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -125,9 +124,9 @@ router.get('/leave/:id', async (ctx, next) => {
 	try {
 		await List.leave(ctx.params.id, ctx.state.user);
 		return ctx.redirect('/lists/' + ctx.request.body.id);
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
@@ -151,9 +150,9 @@ router.get('/:id', async (ctx, next) => {
 			user: ctx.state.user,
 			numGifts: numGifts
 		});
-	} catch (err) {
-		logger.error(err);
-		return next(err);
+	} catch (error) {
+		logger.error(error);
+		return next(error);
 	}
 });
 
