@@ -1,35 +1,32 @@
-const logger = require('../lib/logging.js');
-const express = require('express');
-const router = express.Router();
+//const logger = require('../lib/logging.js');
+const Router = require('koa-router');
+const router = new Router();
+const authRouter = require('./auth');
+const listsRouter = require('./lists');
 
-router.get('/', function (req, res, next) {
-	if (req.user) {
-		res.redirect('/lists');
-	} else {
-		req.prismic.api.getSingle('home-page')
-		.then(function (document) {
-			res.render('index', {
-				document: document,
-				error: req.flash('error')
-			});
-		}, function (err) {
-			logger.error(err);
-			return next(err);
-		});
-	}
+router.use(authRouter.routes(), authRouter.allowedMethods());
+router.use(listsRouter.routes(), listsRouter.allowedMethods());
+
+router.get('/', async (ctx) => {
+	//ctx.isAuthenticated()
+	return ctx.render('index', { message: 'root' });
 });
 
-router.get('/login', function (req, res) {
-	res.render('login', {
-		error: req.flash('error'),
-		returnTo: req.flash('ret', req.session.returnTo),
-		redirectTo: req.session.redirectTo
-	});
-});
-
-router.get('/logout', function (req, res) {
-	req.logout();
-	res.redirect('/');
-});
+// router.get('/', function (req, res, next) {
+// 	if (req.user) {
+// 		res.redirect('/lists');
+// 	} else {
+// 		req.prismic.api.getSingle('home-page')
+// 		.then(function (document) {
+// 			res.render('index', {
+// 				document: document,
+// 				error: req.flash('error')
+// 			});
+// 		}, function (err) {
+// 			logger.error(err);
+// 			return next(err);
+// 		});
+// 	}
+// });
 
 module.exports = router;

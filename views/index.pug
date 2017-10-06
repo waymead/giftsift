@@ -4,15 +4,7 @@ block main
 	#content
 		.mdl-grid
 			.mdl-cell.mdl-cell--12-col
-				h2.mdl-color-text--primary= document.getText('home-page.title')
-				
-			.mdl-cell.mdl-cell--12-col
-				.mdl-card.mdl-shadow--4dp.card-wide
-					.mdl-card__title#home-card-1.home-card
-						h5 
-					//.mdl-card__media
-						p pic
-					.mdl-card__supporting-text
-						div!= document.getHtml('home-page.body')
-					.mdl-card__actions
-						a.mdl-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--primary(href="/login") Login
+				p=message
+				p=user
+block append script
+	script.
