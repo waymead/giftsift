@@ -5,16 +5,28 @@ const authRouter = require('./auth');
 const listsRouter = require('./lists');
 const giftsRouter = require('./gifts');
 
+router.use(async (ctx, next) => {
+	try {
+		await next();
+	} catch (err) {
+		ctx.status = 400;
+		ctx.body = {
+			message: 'Oh noes!',
+			error: err
+		};
+	}
+});
+
 router.use(authRouter.routes(), authRouter.allowedMethods());
 router.use(listsRouter.routes(), listsRouter.allowedMethods());
 router.use(giftsRouter.routes(), giftsRouter.allowedMethods());
 
-router.get('/', async (ctx) => {
+router.get('/', async ctx => {
 	if (ctx.isAuthenticated()) {
 		return ctx.redirect('/lists');
 	} else {
 		return ctx.render('index', { message: 'root' });
-	}	
+	}
 });
 
 // router.get('/', function (req, res, next) {
