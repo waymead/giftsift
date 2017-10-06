@@ -16,6 +16,7 @@ block main
 					.mdl-card__supporting-text
 						form(action="/lists/save", method="post")
 							if list
+								p=list
 								input(type="hidden", id="id", name="id", value=list.id)
 								.mdl-textfield.mdl-js-textfield
 									input.mdl-textfield__input(type="text", id="name", name="name", required, value=list.name)

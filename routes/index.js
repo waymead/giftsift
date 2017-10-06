@@ -8,8 +8,11 @@ router.use(authRouter.routes(), authRouter.allowedMethods());
 router.use(listsRouter.routes(), listsRouter.allowedMethods());
 
 router.get('/', async (ctx) => {
-	//ctx.isAuthenticated()
-	return ctx.render('index', { message: 'root' });
+	if (ctx.isAuthenticated()) {
+		return ctx.redirect('/lists');
+	} else {
+		return ctx.render('index', { message: 'root' });
+	}	
 });
 
 // router.get('/', function (req, res, next) {
