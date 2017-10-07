@@ -25,7 +25,7 @@ router.get('/', async (ctx, next) => {
 	}
 });
 
-router.get('/add', async (ctx, next) => {
+router.get('/add', async (ctx) => {
 	return ctx.render('lists/edit', { owner: ctx.state.user });
 });
 
