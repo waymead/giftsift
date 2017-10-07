@@ -43,8 +43,6 @@ const router = require('./routes');
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-//app.use(require('./lib/middleware.js'));
-
 app.listen(process.env.PORT);
 
 module.exports = app;
