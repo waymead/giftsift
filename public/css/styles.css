@@ -52,7 +52,7 @@ a {
 	padding: 16px;
 }
 
-.mdl-layout__drawer header img {
+img.small {
 	display: inline-block;
 	border-radius: 50%;
 	height: 40px;
