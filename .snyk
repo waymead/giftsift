@@ -1,26 +1,4 @@
-<<<<<<< HEAD
-ignore:
-  'npm:ms:20151024':
-    - node-rest-client > debug > ms:
-        reason: None given
-        expires: '2016-02-09T13:57:17.544Z'
-  'npm:uglify-js:20151024':
-    - jade > transformers > uglify-js:
-        reason: None given
-        expires: '2016-02-09T14:00:45.121Z'
-  'npm:uglify-js:20150824':
-    - jade > transformers > uglify-js:
-        reason: None given
-        expires: '2016-02-09T14:01:16.271Z'
-  'npm:qs:20170213':
-    - auth0 > rest-facade > superagent > qs:
-        reason: None given
-        expires: '2017-04-16T09:04:45.840Z'
-patch: {}
-version: v1.5.2
-=======
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.7.1
 ignore: {}
 patch: {}
->>>>>>> develop
