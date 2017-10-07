@@ -41,6 +41,20 @@ app.use(passport.session());
 //app.use(prismic);
 
 app.use(views(__dirname + '/views', { extension: 'pug' }));
+
+app.use(async (ctx, next) => {
+	try {
+		await next();
+		if (ctx.status === 404) {
+			return ctx.render('error', {message: '404'});
+		}
+	} catch (err) {
+		ctx.status = 400;
+		ctx.app.emit('error', err, ctx);
+		return ctx.render('error', { message: err });
+	}
+});
+
 const router = require('./routes');
 app.use(router.routes());
 app.use(router.allowedMethods());
