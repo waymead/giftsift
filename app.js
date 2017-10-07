@@ -24,7 +24,7 @@ app.use(helmet());
 app.use(bodyParser());
 app.use(favicon(__dirname + '/public/images/logo.png'));
 
-app.keys = ['your-session-secret'];
+app.keys = [process.env.REDIS_SESSION_SECRET];
 app.use(session({
 	store: redisStore()
 }, app));
