@@ -2,8 +2,6 @@ require('dotenv').load({
 	silent: true
 });
 
-//const logger = require('./lib/logging.js');
-
 const Koa = require('koa');
 const serve = require('koa-static');
 const helmet = require('koa-helmet');
@@ -38,24 +36,10 @@ const passport = require('koa-passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-//app.use(prismic);
-
 app.use(views(__dirname + '/views', { extension: 'pug' }));
 
 // Error handling
-app.use(async (ctx, next) => {
-	try {
-		await next();
-		if (ctx.status === 404) {
-			ctx.throw(404, 'Not found');
-		}
-	} catch (err) {
-		console.log(err);
-		ctx.status = 400;
-		ctx.app.emit('error', err, ctx);
-		return ctx.render('error', { message: err });
-	}
-});
+app.use(require('./lib/middleware').errorHandler);
 
 const router = require('./routes');
 app.use(router.routes());
@@ -64,3 +48,5 @@ app.use(router.allowedMethods());
 //app.use(require('./lib/middleware.js'));
 
 app.listen(process.env.PORT);
+
+module.exports = app;
