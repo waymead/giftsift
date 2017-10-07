@@ -52,12 +52,12 @@ a {
     padding: 16px;
 }
 
-.mdl-layout__drawer header img {
-    display: inline-block;
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
-    padding: 0.5rem;
+img.small {
+	display: inline-block;
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+	padding: 0.5rem;
 }
 
 .mdl-layout__drawer .mdl-layout__title {

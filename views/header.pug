@@ -1,24 +1,35 @@
 block header
-	header.mdl-layout__header.mdl-layout--small-screen-only
+	header.mdl-layout__header
 		.mdl-layout-icon
 		.mdl-layout__header-row
-			.mdl-layout__title.mdl-layout--small-screen-only
+			.mdl-layout__title
 				span GiftSift
 				//img.logo(src="/images/logo-white.png")
 			.mdl-layout-spacer
 			nav.mdl-navigation.mdl-layout--large-screen-only
-				a.mdl-navigation__link(href="/") Home
+				a.mdl-navigation__link(href="/")
+					i.material-icons home
+					span Home
 				if user && user.roles && user.roles.indexOf('admin') >= 0
-					a.mdl-navigation__link(href="/admin") Admin
+					a.mdl-navigation__link(href="/admin")
+						i.material-icons dashboard
+						span Admin
 				if !user
-					a.mdl-navigation__link(href="/login") Login
+					a.mdl-navigation__link(href="/auth/login") 
+						i.material-icons power_settings_new
+						span Login
 				if user
-					a.mdl-navigation__link(href="/logout") Logout
+					a.mdl-navigation__link(href="/auth/logout")
+						i.material-icons power_settings_new
+						span Logout
+				//if user
+					img.small(src=user.picture)
+					span= user.displayName
 	.mdl-layout__drawer
 		header.mdl-color-text--white
 			.mdl-layout__title GiftSift
 			if user
-				img(src=user.picture)
+				img.small(src=user.picture)
 				span= user.displayName
 		nav.mdl-navigation
 			a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/")
@@ -29,10 +40,10 @@ block header
 					i.material-icons dashboard
 					span Admin
 			if !user
-				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/login") 
+				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/auth/login") 
 					i.material-icons power_settings_new
 					span Login
 			if user
-				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/logout") 
+				a.mdl-color-text--blue-grey-800.mdl-navigation__link(href="/auth/logout") 
 					i.material-icons power_settings_new
 					span Logout

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ignore:
   'npm:ms:20151024':
     - node-rest-client > debug > ms:
@@ -17,3 +18,9 @@ ignore:
         expires: '2017-04-16T09:04:45.840Z'
 patch: {}
 version: v1.5.2
+=======
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+ignore: {}
+patch: {}
+>>>>>>> develop

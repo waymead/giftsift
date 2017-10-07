@@ -10,7 +10,7 @@ block main
 				
 			.mdl-cell.mdl-cell--12-col
 				if numGifts === 0
-					h6 No-one has added any gifts to yout list yet. 
+					h6 No-one has added any gifts to your list yet. 
 						a(href="/lists/share/#{list.id}") Share your list
 						span &nbsp;again.
 				else
@@ -57,8 +57,8 @@ block main
 			dialog#delete-dialog.mdl-dialog
 				h4.mdl-dialog__title#gift-name
 				.mdl-dialog__content
-					p Are you sure you want to delete the list?
-					p This will delete all gifts in the list, even if other people have bought them.
+					p Are you sure you want to delete the gift?
+					p This will delete permanently remove the gift so people can't see it.
 					p#list-name
 				.mdl-dialog__actions
 					a.mdl-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent.ok-button(href="/gifts/delete/") Delete
