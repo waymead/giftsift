@@ -5,7 +5,7 @@ require('dotenv').load({
 //const logger = require('./lib/logging.js');
 
 const Koa = require('koa');
-const static = require('koa-static');
+const serve = require('koa-static');
 const helmet = require('koa-helmet');
 const favicon = require('koa-favicon');
 const bodyParser = require('koa-bodyparser');
@@ -16,7 +16,7 @@ const redisStore = require('koa-redis');
 //const prismic = require('./lib/prismic');
 
 const app = new Koa();
-app.use(static('public', {}));
+app.use(serve('public', {}));
 
 app.use(helmet());
 // app.use(
