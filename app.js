@@ -11,8 +11,6 @@ const session = require('koa-generic-session');
 const views = require('koa-views');
 const redisStore = require('koa-redis');
 
-//const prismic = require('./lib/prismic');
-
 const app = new Koa();
 app.use(serve('public', {}));
 
