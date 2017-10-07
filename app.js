@@ -26,7 +26,9 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 
 app.keys = [process.env.REDIS_SESSION_SECRET];
 app.use(session({
-	store: redisStore()
+	store: redisStore({
+		url: process.env.REDIS_URL
+	})
 }, app));
 
 require('./lib/auth0-strategy');
