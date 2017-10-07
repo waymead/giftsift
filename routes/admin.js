@@ -14,15 +14,6 @@ router.use(async (ctx, next) => {
 	return next();
 });
 
-// router.use(function (req, res, next) {
-// 	if (req.user && req.user.roles && req.user.roles.indexOf('admin') >= 0) {
-// 		next();
-// 	} else {
-// 		res.sendStatus(403);
-// 	}
-
-// });
-
 router.get('/', async (ctx, next) => {
 	try {
 		var lists = await List.find({}, {}, { sort: 'name' });
@@ -32,18 +23,6 @@ router.get('/', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// var allLists;
-	// List.find({}, {}, { sort: 'name' })
-	// 	.then(function (lists) {
-	// 		allLists = lists;
-	// 		return Gift.find({}, {}, { sort: 'name' });
-	// 	})
-	// 	.then(function (gifts) {
-	// 		res.render('admin/index', { lists: allLists, gifts: gifts });
-	// 	})
-	// 	.catch(function (err) {
-	// 		logger.error(err);
-	// 	});
 });
 
 router.get('/lists', async (ctx, next) => {
@@ -54,13 +33,6 @@ router.get('/lists', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// List.find({}, {}, { sort: 'name' })
-	// 	.then(function (lists) {
-	// 		res.render('admin/lists', { lists: lists });
-	// 	})
-	// 	.catch(function (err) {
-	// 		logger.error(err);
-	// 	});
 });
 
 module.exports = router;

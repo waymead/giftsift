@@ -7,7 +7,6 @@ const router = new Router(
 );
 
 router.get('/login', async (ctx) => {
-	//passport.authenticate('auth0'), () => {
 	const env = {
 		AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
 		AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
@@ -15,8 +14,6 @@ router.get('/login', async (ctx) => {
 	};
 	ctx.state.env = env;
 	return ctx.render('login', { message: 'auth' });
-
-	//};
 });
 
 router.get('/logout', async (ctx) => {
@@ -30,20 +27,5 @@ router.get(
 		successRedirect: '/',
 		failureRedirect: '/login'
 	})
-
-	//return ctx.render('index', {});
 );
-
-// router.get('/callback',
-// 	passport.authenticate('auth0'), (req, res) => {
-// 		let returnTo = req.session.returnTo || '/';
-// 		delete req.session.returnTo;
-// 		res.redirect(returnTo);
-// 	});
-
-// router.get('/logout', function (req, res) {
-// 	req.logout();
-// 	res.redirect('/');
-// });
-
 module.exports = router;
