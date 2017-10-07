@@ -4,10 +4,14 @@ block main
 	#content
 		.mdl-grid
 			.mdl-cell.mdl-cell--12-col
-				h1.mdl-color-text--orange-900 GiftSift
-				h3.mdl-color-text--orange-600 Always getting presents you don't want?
-				h3.mdl-color-text--orange-600 Never getting the gifts you do want?
-				h3.mdl-color-text--orange-600 Share lists and gift ideas with family and friends.
-				a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--accent.mdl-js-ripple-effect(href="/auth/login") Login
+				.demo-card-wide.mdl-card.mdl-shadow--2dp.card-wide
+					.mdl-card__title#home-card-1
+						h1.mdl-card__title-text.mdl-color-text--white GiftSift
+					.mdl-card__supporting-text
+						p.mdl-color-text--orange-600 Always getting presents you don't want?
+						p.mdl-color-text--orange-600 Never getting the gifts you do want?
+						p.mdl-color-text--orange-600 Share lists and gift ideas with family and friends.
+					.mdl-card__actions.mdl-card--border
+						a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--accent.mdl-js-ripple-effect(href="/auth/login") Login
 block append script
 	script.
