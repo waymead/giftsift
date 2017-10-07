@@ -24,21 +24,4 @@ router.use(listsRouter.routes(), listsRouter.allowedMethods());
 router.use(giftsRouter.routes(), giftsRouter.allowedMethods());
 router.use(adminRouter.routes(), adminRouter.allowedMethods());
 
-// router.get('/', function (req, res, next) {
-// 	if (req.user) {
-// 		res.redirect('/lists');
-// 	} else {
-// 		req.prismic.api.getSingle('home-page')
-// 		.then(function (document) {
-// 			res.render('index', {
-// 				document: document,
-// 				error: req.flash('error')
-// 			});
-// 		}, function (err) {
-// 			logger.error(err);
-// 			return next(err);
-// 		});
-// 	}
-// });
-
 module.exports = router;

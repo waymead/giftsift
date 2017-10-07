@@ -23,14 +23,6 @@ router.get('/add/:listId', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// List.findByMember(req.user)
-	// 	.then(function (lists) {
-	// 		res.render('gifts/edit', { lists: lists, listId: req.params.listId, owner: req.user });
-	// 	})
-	// 	.catch(function (error) {
-	// 		logger.error(error);
-	// 		return next(error);
-	// 	});
 });
 
 router.get('/edit/:id/:listId', async (ctx, next) => {
@@ -42,24 +34,6 @@ router.get('/edit/:id/:listId', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// var theGift;
-	// Gift.findByIdAndOwner(ctx.params.id, ctx.state.user)
-	// 	.then(function (gift) {
-	// 		if (gift == null) {
-	// 			var error = new error();
-	// 			error.status = 404;
-	// 			throw error;
-	// 		}
-	// 		theGift = gift;
-	// 		return List.findByMember(req.user);
-	// 	})
-	// 	.then(function (lists) {
-	// 		res.render('gifts/edit', { gift: theGift, lists: lists, listId: req.params.listId, owner: req.user });
-	// 	})
-	// 	.catch(function (error) {
-	// 		logger.error(error);
-	// 		return next(error);
-	// 	});
 });
 
 router.post('/save/:listId', async (ctx, next) => {
@@ -96,14 +70,6 @@ router.get('/delete/:id/:listId', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// Gift.delete(req.params.id, req.user)
-	// 	.then(function (gift) {
-	// 		res.redirect('/lists/' + req.params.listId + '#' + gift.name);
-	// 	})
-	// 	.catch(function (error) {
-	// 		logger.error(error);
-	// 		return next(error);
-	// 	});
 });
 
 router.get('/undelete/:id/:listId', async (ctx, next) => {
@@ -114,14 +80,6 @@ router.get('/undelete/:id/:listId', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// Gift.undelete(req.params.id, req.user)
-	// 	.then(function (gift) {
-	// 		res.redirect('/lists/' + req.params.listId + '#' + gift.name);
-	// 	})
-	// 	.catch(function (error) {
-	// 		logger.error(error);
-	// 		return next(error);
-	// 	});
 });
 
 router.get('/buy/:id/:listId', async (ctx, next) => {
@@ -132,14 +90,6 @@ router.get('/buy/:id/:listId', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// Gift.buy(req.params.id, req.user)
-	// 	.then(function () {
-	// 		res.redirect('/lists/' + req.params.listId);
-	// 	})
-	// 	.catch(function (error) {
-	// 		logger.error(error);
-	// 		return next(error);
-	// 	});
 });
 
 router.get('/replace/:id/:listId', async (ctx, next) => {
@@ -150,14 +100,6 @@ router.get('/replace/:id/:listId', async (ctx, next) => {
 		logger.error(error);
 		return next(error);
 	}
-	// Gift.replace(req.params.id, req.user)
-	// 	.then(function () {
-	// 		res.redirect('/lists/' + req.params.listId);
-	// 	})
-	// 	.catch(function (error) {
-	// 		logger.error(error);
-	// 		return next(error);
-	// 	});
 });
 
 module.exports = router;
