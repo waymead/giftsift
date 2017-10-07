@@ -45,3 +45,5 @@ yarn.lock
 # Visual Studio Code
 .vscode
 
+package-lock.json
+.snyk
