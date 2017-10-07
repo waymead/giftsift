@@ -4,6 +4,7 @@ const router = new Router();
 const authRouter = require('./auth');
 const listsRouter = require('./lists');
 const giftsRouter = require('./gifts');
+const adminRouter = require('./admin');
 
 router.get('/', async ctx => {
 	if (ctx.isAuthenticated()) {
@@ -16,6 +17,7 @@ router.get('/', async ctx => {
 router.use(authRouter.routes(), authRouter.allowedMethods());
 router.use(listsRouter.routes(), listsRouter.allowedMethods());
 router.use(giftsRouter.routes(), giftsRouter.allowedMethods());
+router.use(adminRouter.routes(), adminRouter.allowedMethods());
 
 // router.get('/', function (req, res, next) {
 // 	if (req.user) {

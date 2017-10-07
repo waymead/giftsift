@@ -42,13 +42,15 @@ app.use(passport.session());
 
 app.use(views(__dirname + '/views', { extension: 'pug' }));
 
+// Error handling
 app.use(async (ctx, next) => {
 	try {
 		await next();
 		if (ctx.status === 404) {
-			return ctx.render('error', {message: '404'});
+			ctx.throw(404, 'Not found');
 		}
 	} catch (err) {
+		console.log(err);
 		ctx.status = 400;
 		ctx.app.emit('error', err, ctx);
 		return ctx.render('error', { message: err });
