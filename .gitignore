@@ -41,6 +41,7 @@ bower_components
 .env
 Thumbs.db
 yarn.lock
+.snyk
 
 # Visual Studio Code
 .vscode
