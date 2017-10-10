@@ -26,7 +26,7 @@ app.use(
 		directives: {
 			defaultSrc: ['\'self\''],
 			styleSrc: ['\'self\'', 'cdn.auth0.com', 'aiwf.eu.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
-			scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'cdn.auth0.com', 'aiwf.eu.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'www.google-analytics.com'],
+			scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'cdn.auth0.com', 'cdn.eu.auth0.com', 'aiwf.eu.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'www.google-analytics.com'],
 			fontSrc: ['\'self\'', 'fonts.googleapis.com', 'fonts.gstatic.com'],
 			imgSrc: ['*']
 		}
