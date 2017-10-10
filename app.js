@@ -27,7 +27,8 @@ app.use(
 			defaultSrc: ['\'self\''],
 			styleSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
 			scriptSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'www.google-analytics.com'],
-			fontSrc: ['\'self\'', 'fonts.googleapis.com', 'fonts.gstatic.com']
+			fontSrc: ['\'self\'', 'fonts.googleapis.com', 'fonts.gstatic.com'],
+			imgSrc: ['*']
 		}
 	})
 );
