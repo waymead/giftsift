@@ -10,7 +10,7 @@ const bodyParser = require('koa-bodyparser');
 const session = require('koa-generic-session');
 const views = require('koa-views');
 const redisStore = require('koa-redis');
-
+const { errorHandler } = require('./lib/middleware');
 const app = new Koa();
 app.use(serve('public', {}));
 
@@ -39,7 +39,7 @@ app.use(passport.session());
 app.use(views(__dirname + '/views', { extension: 'pug' }));
 
 // Error handling
-app.use(require('./lib/middleware').errorHandler);
+app.use(errorHandler());
 
 const router = require('./routes');
 app.use(router.routes());
