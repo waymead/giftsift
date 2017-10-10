@@ -1,0 +1,56 @@
+{
+	"name": "giftsift",
+	"scripts": {
+	},
+	"env": {
+	  "AUTH0_CALLBACK_URL": {
+		"required": true
+	  },
+	  "AUTH0_CLIENT_ID": {
+		"required": true
+	  },
+	  "AUTH0_CLIENT_SECRET": {
+		"required": true
+	  },
+	  "AUTH0_DOMAIN": {
+		"required": true
+	  },
+	  "LOG_LEVEL": {
+		"required": true
+	  },
+	  "LOGGLY_LOG_LEVEL": {
+		"required": true
+	  },
+	  "LOGGLY_SUBDOMAIN": {
+		"required": true
+	  },
+	  "LOGGLY_TOKEN": {
+		"required": true
+	  },
+	  "MONGO_URL": {
+		"required": true
+	  },
+	  "NEWRELIC_APP_NAME": {
+		"required": true
+	  },
+	  "NEWRELIC_LICENCE_KEY": {
+		"required": true
+	  },
+	  "REDIS_SESSION_SECRET": {
+		"required": true
+	  },
+	  "REDIS_URL": {
+		"required": true
+	  }
+	},
+	"formation": {
+	},
+	"addons": [
+	  "heroku-redis"
+	],
+	"buildpacks": [
+	  {
+		"url": "heroku/nodejs"
+	  }
+	]
+  }
