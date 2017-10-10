@@ -18,7 +18,7 @@ app.use(serve('public', {}));
 app.use(helmet());
 app.use(
 	helmet.referrerPolicy({
-		policy: 'unsafe-url'
+		policy: 'same-origin'
 	})
 );
 app.use(
