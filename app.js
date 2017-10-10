@@ -11,6 +11,7 @@ const session = require('koa-generic-session');
 const views = require('koa-views');
 const redisStore = require('koa-redis');
 const { errorHandler } = require('./lib/middleware');
+
 const app = new Koa();
 app.use(serve('public', {}));
 
