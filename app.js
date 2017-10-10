@@ -25,8 +25,9 @@ app.use(
 	helmet.contentSecurityPolicy({
 		directives: {
 			defaultSrc: ['\'self\''],
-			styleSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com', 'fonts.gstatic.com'],
-			scriptSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'www.google-analytics.com']
+			styleSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io'],
+			scriptSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'www.google-analytics.com'],
+			fontSrc: ['\'self\'', 'fonts.googleapis.com', 'fonts.gstatic.com']
 		}
 	})
 );
