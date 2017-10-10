@@ -16,11 +16,11 @@ const app = new Koa();
 app.use(serve('public', {}));
 
 app.use(helmet());
-// app.use(
-// 	helmet.referrerPolicy({
-// 		policy: 'unsafe-url'
-// 	})
-// );
+app.use(
+	helmet.referrerPolicy({
+		policy: 'unsafe-url'
+	})
+);
 
 app.use(bodyParser());
 app.use(favicon(__dirname + '/public/images/logo.png'));
