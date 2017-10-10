@@ -21,16 +21,31 @@ app.use(
 		policy: 'unsafe-url'
 	})
 );
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			defaultSrc: ['\'self\''],
+			styleSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'fonts.googleapis.com'],
+			scriptSrc: ['\'self\'', 'cdn.auth0.com', 'cdnjs.cloudflare.com', 'code.getmdl.io', 'www.google-analytics.com'],
+			fontSrc: ['\'self\'', 'fonts.googleapis.com', 'fonts.gstatic.com']
+		}
+	})
+);
 
 app.use(bodyParser());
 app.use(favicon(__dirname + '/public/images/logo.png'));
 
 app.keys = [process.env.REDIS_SESSION_SECRET];
-app.use(session({
-	store: redisStore({
-		url: process.env.REDIS_URL
-	})
-}, app));
+app.use(
+	session(
+		{
+			store: redisStore({
+				url: process.env.REDIS_URL
+			})
+		},
+		app
+	)
+);
 
 require('./lib/auth0-strategy');
 const passport = require('koa-passport');
