@@ -1,82 +1,66 @@
-var lock = new Auth0Lock(
-	'gke8dvNOd9zCObbyjHMu95SfFPnljmh4',
-	'giftsift.eu.auth0.com'
-);
+/* eslint-env jquery */
+/* global dialogPolyfill */
 
-lock.on('authenticated', function(authResult) {
-	lock.getUserInfo(authResult.accessToken, function(error, profile) {
-		if (error) {
-			// Handle error
-			return;
-		}
-		localStorage.setItem('accessToken', authResult.accessToken);
-		localStorage.setItem('profile', JSON.stringify(profile));
-
-		// Update DOM
+$(document).ready(function () {
+	$('.multi').select2({
+		placeholder: 'Select lists'
 	});
-});
 
-var router = new VueRouter({
-	mode: 'history',
-	routes: [
-		{
-			path: '/public',
-			component: null
-		},
-		{
-			path: '/private',
-			component: null
-		}
-	]
-});
-
-var app = new Vue({
-	el: '#app',
-	router: router,
-	data: {
-		message: 'Hello Vue!',
-		authenticated: false,
-		secretThing: '',
-		lock: new Auth0Lock(
-			'gke8dvNOd9zCObbyjHMu95SfFPnljmh4',
-			'giftsift.eu.auth0.com'
-		)
-	},
-	mounted() {
-		var self = this;
-		Vue.nextTick(function() {
-			self.authenticated = checkAuth();
-			self.lock.on('authenticated', authResult => {
-				console.log('authenticated');
-				localStorage.setItem('id_token', authResult.idToken);
-				self.lock.getProfile(authResult.idToken, (error, profile) => {
-					if (error) {
-						// Handle error
-						return;
-					}
-					// Set the token and user profile in local storage
-					localStorage.setItem('profile', JSON.stringify(profile));
-
-					self.authenticated = true;
-				});
-			});
-			self.lock.on('authorization_error', error => {
-				// handle error when authorizaton fails
-			});
+	$('.delete-list-button').each(function () {
+		$(this).on('click', function () {
+			deleteList($(this).attr('data-id'), $(this).attr('data-name'));
 		});
-	},
-	events: {
-		logout: function() {
-			this.logout();
-		}
-	},
-	methods: {
-		login() {
-			this.lock.show();
-		}
-	}
+	});
+
+	$('.leave-list-button').each(function() {
+		$(this).on('click', function() {
+			leaveList($(this).attr('data-id'), $(this).attr('data-name'));
+		});
+	});	
+
+	$('.delete-gift-button').each(function() {
+		$(this).on('click', function () {
+			deleteGift($(this).attr('data-id'), $(this).attr('data-name'), $(this).attr('data-listId'));
+		});
+	});
+
 });
 
-function checkAuth() {
-	return !!localStorage.getItem('id_token');
+function deleteList(id, name) {
+	const deleteDialog = document.querySelector('#delete-list-dialog');
+	if (! deleteDialog.showModal) {
+		dialogPolyfill.registerDialog(deleteDialog);
+	}
+	deleteDialog.showModal();
+	deleteDialog.querySelector('.close-button').addEventListener('click', function() {
+		deleteDialog.close();       
+	});
+	deleteDialog.querySelector('#dialog-title').innerText = name;
+	deleteDialog.querySelector('.ok-button').href='/lists/delete/' + id;
+}
+
+function leaveList(id, name) {
+	const leaveDialog = document.querySelector('#leave-list-dialog');
+	if (! leaveDialog.showModal) {
+		dialogPolyfill.registerDialog(leaveDialog);
+	}
+	leaveDialog.showModal();
+	leaveDialog.querySelector('.close-button').addEventListener('click', function() {
+		leaveDialog.close();       
+	});
+	leaveDialog.querySelector('#dialog-title').innerText = name;
+	leaveDialog.querySelector('.ok-button').href='/lists/leave/' + id;
+}
+
+function deleteGift(id, name, listId) {
+	var dialog = document.querySelector('#delete-gift-dialog');
+	if (! dialog.showModal) {
+		dialogPolyfill.registerDialog(dialog);
+	}
+	dialog.showModal();
+	dialog.querySelector('.close-button').addEventListener('click', function() {
+		dialog.close();       
+	});
+	dialog.querySelector('#gift-name').innerText = name;
+	dialog.querySelector('.ok-button').href='/gifts/delete/' + id + '/' + listId;
 }
