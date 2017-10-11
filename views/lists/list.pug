@@ -35,7 +35,7 @@ block main
 										if gift.isOwner(user)
 											a.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--primary(href="/gifts/edit/" + gift.id + "/" + list.id)
 												i.material-icons.md-light edit									
-											button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-button(data-id=gift.id, data-name=gift.name, data-listId=list.id)
+											button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--gray.delete-gift-button(data-id=gift.id, data-name=gift.name, data-listId=list.id)
 												i.material-icons.md-light delete
 										else
 											if gift.isBoughtBy(user)
@@ -54,7 +54,7 @@ block main
 				a.new.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored.mdl-js-ripple-effect(href="/gifts/add/" + list.id)
 					i.material-icons.md-light add
 
-			dialog#delete-dialog.mdl-dialog
+			dialog#delete-gift-dialog.mdl-dialog
 				h4.mdl-dialog__title#gift-name
 				.mdl-dialog__content
 					p Are you sure you want to delete the gift?
@@ -65,23 +65,3 @@ block main
 					button.mdl-button.close-button.close(type="button") Cancel
 
 block append script
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js")
-	script.
-		var dialog = document.querySelector('#delete-dialog');
-		$('.delete-button').each(function() {
-			$(this).on('click', function() {
-				deleteList($(this).attr('data-id'), $(this).attr('data-name'), $(this).attr('data-listId'));
-			});
-		});
-		function deleteList(id, name, listId) {
-			var dialog = document.querySelector('#delete-dialog');
-			if (! dialog.showModal) {
-				dialogPolyfill.registerDialog(dialog);
-			}
-			dialog.showModal();
-			dialog.querySelector('.close-button').addEventListener('click', function() {
-				dialog.close();       
-			});
-			dialog.querySelector('#gift-name').innerText = name;
-			dialog.querySelector('.ok-button').href='/gifts/delete/' + id + '/' + listId;
-		}

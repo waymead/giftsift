@@ -43,11 +43,3 @@ block main
 							a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href="/lists") Cancel
 			
 block append script
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js")
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js")
-	script.
-		$("#members").select2({
-			tags: true,
-			tokenSeparators: [',', ' '],
-			placeholder: 'Add members (emails)'
-		});
