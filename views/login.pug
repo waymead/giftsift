@@ -2,28 +2,9 @@ extends layout
 
 block main
 	section#main
-
+	p#clientId.hidden= env.AUTH0_CLIENT_ID
+	p#domain.hidden= env.AUTH0_DOMAIN
+	p#callbackUrl.hidden= env.AUTH0_CALLBACK_URL
+	
 block append script
-	script(src="https://cdn.auth0.com/js/lock/10.11.0/lock.min.js")
-	script.
-		var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', {
-			auth: {
-				redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
-				sso: true,
-				responseType: 'code',
-				params: {
-					scope: 'openid name email picture'
-				}
-			},
-			rememberLastLogin: true,
-			theme: {
-				logo: '/images/logo.png',
-				primaryColor: '#ff5722'
-			},
-			languageDictionary: {
-				title: "GiftSift"
-			},
-			socialButtonStyle: 'big',
-			closable: false
-		});
-		window.onload = lock.show();
+	script(src="/js/auth.js")
