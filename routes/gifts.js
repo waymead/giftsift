@@ -44,6 +44,7 @@ router.post('/save/:listId', async (ctx, next) => {
 			image: ctx.request.body.image,
 			type: ctx.request.body.type,
 			lists: ctx.request.body.lists,
+			notes: ctx.request.body.notes,
 			owner: ctx.state.user
 		};
 		if (ctx.request.body.id) {
