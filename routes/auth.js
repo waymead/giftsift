@@ -7,12 +7,9 @@ const router = new Router(
 );
 
 router.get('/login', async (ctx) => {
-	const env = {
-		AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-		AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-		AUTH0_CALLBACK_URL: ctx.origin + '/auth/callback'
-	};
-	ctx.state.env = env;
+	ctx.state.AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
+	ctx.state.AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
+	ctx.state.AUTH0_CALLBACK_URL = ctx.origin + '/auth/callback';
 	return ctx.render('login', { message: 'auth' });
 });
 
@@ -25,7 +22,8 @@ router.get(
 	'/callback',
 	passport.authenticate('auth0', {
 		successRedirect: '/',
-		failureRedirect: '/login'
+		failureRedirect: '/login'.anchor,
+		callbackURL: '/auth/callback'
 	})
 );
 module.exports = router;

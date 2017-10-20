@@ -2,9 +2,9 @@ extends layout
 
 block main
 	section#main
-	p#clientId.hidden= env.AUTH0_CLIENT_ID
-	p#domain.hidden= env.AUTH0_DOMAIN
-	p#callbackUrl.hidden= env.AUTH0_CALLBACK_URL
+	p#clientId.hidden= AUTH0_CLIENT_ID
+	p#domain.hidden= AUTH0_DOMAIN
+	p#callbackUrl.hidden= AUTH0_CALLBACK_URL
 	
 block append script
 	script(src="/js/auth.js")
