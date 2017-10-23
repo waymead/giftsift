@@ -90,7 +90,7 @@ router.get('/share/:id/:name?', async (ctx, next) => {
 		return ctx.render('lists/share', {
 			list: list,
 			owner: ctx.state.user,
-			listLink: process.env.LISTLINK_DOMAIN
+			listLink: ctx.origin
 		});
 	} catch (error) {
 		logger.error(error);
