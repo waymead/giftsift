@@ -7,16 +7,16 @@ const giftsRouter = require('./gifts');
 const adminRouter = require('./admin');
 
 router.get('/', async (ctx, next) => {
-	try {
-		if (ctx.isAuthenticated()) {
-			return ctx.redirect('/lists');
-		} else {
-			return ctx.render('index', { });
-		}
-	} catch (error) {
-		logger.error(error);
-		return next(error);
-	}
+  try {
+    if (ctx.isAuthenticated()) {
+      return ctx.redirect('/lists');
+    } else {
+      return ctx.render('index', {});
+    }
+  } catch (error) {
+    logger.error(error);
+    return next(error);
+  }
 });
 
 router.use(authRouter.routes(), authRouter.allowedMethods());
