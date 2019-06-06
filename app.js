@@ -36,10 +36,10 @@ app.use(
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ['"self"'],
+      defaultSrc: ['\'self\''],
       styleSrc: [
-        '"self"',
-        '"unsafe-inline"',
+        '\'self\'',
+        '\'unsafe-inline\'',
         'cdn.auth0.com',
         'aiwf.eu.auth0.com',
         'cdnjs.cloudflare.com',
@@ -47,7 +47,7 @@ app.use(
         'fonts.googleapis.com'
       ],
       scriptSrc: [
-        '"self"',
+        '\'self\'',
         'code.jquery.com',
         'cdn.auth0.com',
         'cdn.eu.auth0.com',
@@ -57,7 +57,7 @@ app.use(
         'code.getmdl.io',
         'www.google-analytics.com'
       ],
-      fontSrc: ['"self"', 'fonts.googleapis.com', 'fonts.gstatic.com'],
+      fontSrc: ['\'self\'', 'fonts.googleapis.com', 'fonts.gstatic.com'],
       connectSrc: ['aiwf.eu.auth0.com'],
       imgSrc: ['*', 'data:'],
       reportUri: 'https://waymead.report-uri.com/r/d/csp/reportOnly'
