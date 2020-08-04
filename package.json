@@ -18,7 +18,7 @@
   "author": "Digby Knight",
   "license": "MIT",
   "dependencies": {
-    "auth0": "^2.8.0",
+    "auth0": "^2.27.1",
     "dotenv": "^4.0.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
