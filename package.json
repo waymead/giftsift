@@ -20,7 +20,7 @@
   "dependencies": {
     "auth0": "^2.8.0",
     "dotenv": "^4.0.0",
-    "koa": "^2.3.0",
+    "koa": "^2.16.1",
     "koa-bodyparser": "^4.2.0",
     "koa-favicon": "^2.0.0",
     "koa-generic-session": "^2.0.0",
